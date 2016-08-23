@@ -1,0 +1,30 @@
+{
+  "name": "cs",
+  "version": "1.0.0",
+  "description": "special-project",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "crypto": "^0.0.3",
+    "express": "^4.14.0",
+    "lodash": "^4.15.0",
+    "mysql": "^2.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raisamong/CS-Generation.git"
+  },
+  "keywords": [
+    "CSG"
+  ],
+  "author": "JR-NEW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raisamong/CS-Generation/issues"
+  },
+  "homepage": "https://github.com/raisamong/CS-Generation#readme"
+}
