@@ -2,6 +2,7 @@ angular.module('csGeneration',[
     "ui.router",
     "ui.bootstrap",
     "loginModule",
+    'registerModule'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
