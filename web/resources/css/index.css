@@ -1,0 +1,13 @@
+.loginPanel {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
+.loginFooter {
+    text-align: center;
+}
+.loginFooter a {
+    cursor: pointer;
+}
