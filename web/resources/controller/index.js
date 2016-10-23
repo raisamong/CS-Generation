@@ -3,7 +3,8 @@ angular.module('csGeneration',[
     "ui.bootstrap",
     "loginModule",
     'registerModule',
-    'dashboardModule'
+    'dashboardModule',
+    'datatableModule'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -22,10 +23,15 @@ angular.module('csGeneration',[
             url: '/dashboard',
             templateUrl: './resources/views/dashboard.html',
             controller: 'DashboardCtrl'
+        })
+        .state('dashboard.datatable', {
+            url: '/datatable',
+            templateUrl: './resources/views/datatable.html',
+            controller: 'DatatableCtrl'
         });
 })
 .controller('indexController', function ($scope, $state, userService) {
-    $state.go('login');
+    $state.go('dashboard.datatable');
 })
 .service('userService', function () {
     var user = {};
