@@ -1,0 +1,31 @@
+.itemTable {
+    height: 150px;
+    border: 1px solid #bce8f1;
+    padding: 10px;
+}
+.itemImage {
+    /*border: 1px solid;*/
+    width: 130px;
+    height: 130px;
+    float:left;
+}
+.ItemInfo {
+    /*border: 1px solid;*/
+    width: calc(100% - 250px);
+    height: 130px;
+    float:left;
+
+}
+.itemOption {
+    /*border: 1px solid;*/
+    width: 120px;
+    height: 130px;
+    float:left;
+}
+.imgProfile {
+    border-radius: 50%;
+    width: 95%;
+    height: 95%;
+    margin-left: 3px;
+    margin-top: 3px;
+}
