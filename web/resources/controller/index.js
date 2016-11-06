@@ -4,7 +4,8 @@ angular.module('csGeneration',[
     "loginModule",
     'registerModule',
     'dashboardModule',
-    'datatableModule'
+    'datatableModule',
+    'addModule'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -28,6 +29,11 @@ angular.module('csGeneration',[
             url: '/datatable',
             templateUrl: './resources/views/datatable.html',
             controller: 'DatatableCtrl'
+        })
+        .state('dashboard.add', {
+            url: '/add',
+            templateUrl: './resources/views/addstudent.html',
+            controller: 'AddCtrl'
         });
 })
 .controller('indexController', function ($scope, $state, userService) {
