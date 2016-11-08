@@ -1,8 +1,6 @@
-var express = require('express');
-var router = express.Router();
 var libAuth = require('../lib/auth.js')
 
-router.route('/search')
+global.router.route('/search')
     .get(function(req, res) {
         res.send('Get a random book');
     })
@@ -61,7 +59,7 @@ router.route('/search')
         res.send('Update the book');
 });
 
-router.route('/searchTwo')
+global.router.route('/searchTwo')
     .post(function (req, res) {
         var info = libAuth.escape(req.body);
         var inserts, sqlCheck, sqlInsert;

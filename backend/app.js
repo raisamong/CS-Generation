@@ -1,10 +1,14 @@
 var express = require('express');
 var app = express();
+var router = express.Router();
 var _ = require('lodash');
 var mysql = require('mysql');
 var db = require('./db');
 var bodyParser = require('body-parser');
 var route = require('./api/route.js');
+
+global._ = _;
+global.router = router;
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded body
@@ -21,10 +25,9 @@ var setupRoute = function () {
       app.use('/', module);
     });
 }
-
 setupRoute();
+
 global.connection = setupMysql();
 global.mysql = mysql;
-global._ = _;
 
 module.exports = app;
