@@ -1,6 +1,6 @@
 var libAuth = require('../lib/auth.js')
 
-global.router.route('/search')
+global.router.route('/login')
     .get(function(req, res) {
         res.send('Get a random book');
     })
@@ -59,11 +59,18 @@ global.router.route('/search')
         res.send('Update the book');
 });
 
-global.router.route('/searchTwo')
+global.router.route('/register')
     .post(function (req, res) {
+        console.log('register', req.body);
+        if (req.body.code != 'pipenew') {
+            res.json({
+                result: 4,
+                msg: 'wrong code'
+            });
+            return;
+        }
         var info = libAuth.escape(req.body);
         var inserts, sqlCheck, sqlInsert;
-
         //setup info check username exist
         sqlCheck = "SELECT * FROM ?? WHERE ?? = ?";
         inserts = ['users', 'username', info.username];
@@ -86,7 +93,7 @@ global.router.route('/searchTwo')
                         }
                         else {
                             res.json({
-                                result: 2,
+                                result: 1,
                                 msg: 'insert failed ' + err
                             });
                         }
@@ -94,14 +101,14 @@ global.router.route('/searchTwo')
                 }
                 else{
                     res.json({
-                        result: 1,
+                        result: 2,
                         msg: 'username exist'
                     });
                 }
             }
             else {
                 res.json({
-                    result: 2,
+                    result: 3,
                     msg: 'check failed ' + err
                 });
             }

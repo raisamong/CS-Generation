@@ -1,4 +1,4 @@
 var route = [
-    './controller/search.js'
+    './controller/user.js'
 ];
 module.exports = route;
