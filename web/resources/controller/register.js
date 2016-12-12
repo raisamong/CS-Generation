@@ -1,6 +1,6 @@
 angular.module('registerModule', [])
-.controller('RegisterCtrl', [ '$scope', 'registerService', '$timeout',
-                            function ($scope, registerService, $timeout) {
+.controller('RegisterCtrl', [ '$scope', 'registerService', '$state',
+                            function ($scope, registerService, $state) {
     // <!-- variables defined -->
     // <!-- end variables defined -->
 
@@ -17,17 +17,17 @@ angular.module('registerModule', [])
         };
         return info;
     };
-
-
     // <!-- end variables function defined -->
 
     // <!-- $scopes function defined -->
-    $scope.register = function () {
+    $scope.register = function (registerForm) {
+        console.log(registerForm);
         var info  = genUserInfo();
         registerService.register(info).then(function (returned) {
             console.log('register succeed', returned);
+            $state.go('login');
         }, function (err) {
-            console.log('register failed', returned);
+            console.log('register failed', err);
         });
     };
 
@@ -46,7 +46,7 @@ angular.module('registerModule', [])
                     data: info
                 })
                 .success(function (data, status, headers, config) {
-                    deferred.resolve(data);
+                    !data.result ? deferred.resolve(data) : deferred.reject(data);
                 })
                 .error( function (data, status, headers, config) {
                     deferred.reject(data);

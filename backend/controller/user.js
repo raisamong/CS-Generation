@@ -75,7 +75,6 @@ global.router.route('/register')
         sqlCheck = "SELECT * FROM ?? WHERE ?? = ?";
         inserts = ['users', 'username', info.username];
         sqlCheck = global.mysql.format(sqlCheck, inserts);
-
         //setup info insert
 
         sqlInsert = "INSERT INTO ?? VALUES (null, ?, ?, ?, ?, ?, null)";
