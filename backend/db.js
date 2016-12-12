@@ -10,7 +10,7 @@ function db() {
         host     : 'localhost',
         user     : 'raisamong',
         password : 'loveyuri55',
-        database : 'ptn',
+        database : 'generation',
         port     : 3000
     });
 	this.connection=con;

@@ -1,4 +1,5 @@
-var libAuth = require('../lib/auth.js')
+var libAuth = require('../lib/auth.js');
+var libUtil = require('../lib/util.js');
 
 global.router.route('/login')
     .get(function(req, res) {
@@ -61,7 +62,6 @@ global.router.route('/login')
 
 global.router.route('/register')
     .post(function (req, res) {
-        console.log('register', req.body);
         if (req.body.code != 'pipenew') {
             res.json({
                 result: 4,
@@ -70,48 +70,60 @@ global.router.route('/register')
             return;
         }
         var info = libAuth.escape(req.body);
-        var inserts, sqlCheck, sqlInsert;
-        //setup info check username exist
-        sqlCheck = "SELECT * FROM ?? WHERE ?? = ?";
-        inserts = ['users', 'username', info.username];
-        sqlCheck = global.mysql.format(sqlCheck, inserts);
-        //setup info insert
-
-        sqlInsert = "INSERT INTO ?? VALUES (null, ?, ?, ?, ?, ?, null)";
-        inserts = ['users', info.username, info.password, info.access, 1, 'admin'];
-        sqlInsert = global.mysql.format(sqlInsert, inserts);
-        //query
-        global.connection.query(sqlCheck, function(err, rows, fields) {
-            if (!err) {
-                if (!(rows && rows.length)) {
-                    global.connection.query(sqlInsert, function(err, rows, fields) {
-                        if (!err) {
-                            res.json({
-                                result: 0
-                            });
-                        }
-                        else {
-                            res.json({
-                                result: 1,
-                                msg: 'insert failed ' + err
-                            });
-                        }
-                    });
-                }
-                else{
-                    res.json({
-                        result: 2,
-                        msg: 'username exist'
-                    });
-                }
-            }
-            else {
+        libUtil.select('*', 'users',['username'],[info.username]).then(function (checkExist) {
+            if (checkExist.result == 1) {
                 res.json({
-                    result: 3,
-                    msg: 'check failed ' + err
+                    result: 10,
+                });
+            } else {
+                res.json({
+                    result: 1,
+                    msg: 'check username failed' + checkExist
                 });
             }
         });
+        // var inserts, sqlCheck, sqlInsert, sqlInsert;
+        // //setup info check username exist
+        // sqlCheck = "SELECT * FROM ?? WHERE ?? = ?";
+        // inserts = ['users', 'username', info.username];
+        // sqlCheck = global.mysql.format(sqlCheck, inserts);
+        //setup info insert
+
+        // sqlInsert = "INSERT INTO ?? VALUES (null, ?, ?, ?, ?, ?, null)";
+        // inserts = ['users', info.username, info.password, info.access, 1, 'admin'];
+        // sqlInsert = global.mysql.format(sqlInsert, inserts);
+        //query
+        // global.connection.query(sqlCheck, function(err, rows, fields) {
+        //     if (!err) {
+        //         if (!(rows && rows.length)) {
+        //             global.connection.query(sqlInsert, function(err, rows, fields) {
+        //                 if (!err) {
+        //                     res.json({
+        //                         result: 0
+        //                     });
+        //                 }
+        //                 else {
+        //                     res.json({
+        //                         result: 1,
+        //                         msg: 'insert failed ' + err
+        //                     });
+        //                 }
+        //             });
+        //         }
+        //         else{
+        //             res.json({
+        //                 result: 2,
+        //                 msg: 'username exist'
+        //             });
+        //         }
+        //     }
+        //     else {
+        //         res.json({
+        //             result: 3,
+        //             msg: 'check failed ' + err
+        //         });
+        //     }
+        // });
 });
 
 module.exports = router;
