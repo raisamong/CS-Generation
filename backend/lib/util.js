@@ -54,6 +54,35 @@ var select = function (selected, table, where, conditions) {
     });
 };
 
+var insert = function (table, values) {
+    return new promise.Promise(function (resolve, reject) {
+        var sql = "INSERT INTO ?? VALUES (";
+        var inserts = [table];
+
+        _.forEach(values, function (value, key) {
+            if (value === null) {
+                sql += 'null, ';
+            } else {
+                sql += '?, ';
+                inserts.push(value);
+            }
+        });
+        sql = sql.substring(0, sql.length - 2) + ')';
+        console.log(sql, inserts);
+        sql = global.mysql.format(sql, inserts);
+        global.connection.query(sql, function(err, rows) {
+            if(!err) {
+                resolve(rows.insertId);
+            }
+            else {
+                console.log(err);
+                reject();
+            }
+        });
+    });
+}
+
 module.exports = {
-    select: select
+    select: select,
+    insert: insert
 };

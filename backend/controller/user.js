@@ -2,9 +2,6 @@ var libAuth = require('../lib/auth.js');
 var libUtil = require('../lib/util.js');
 
 global.router.route('/login')
-    .get(function(req, res) {
-        res.send('Get a random book');
-    })
     .post(function(req, res) {
         //setup search user
         var info = libAuth.escape(req.body);
@@ -55,9 +52,6 @@ global.router.route('/login')
                 });
             }
         });
-    })
-    .put(function(req, res) {
-        res.send('Update the book');
 });
 
 global.router.route('/register')
@@ -72,8 +66,22 @@ global.router.route('/register')
         var info = libAuth.escape(req.body);
         libUtil.select('*', 'users',['username'],[info.username]).then(function (checkExist) {
             if (checkExist.result == 1) {
-                res.json({
-                    result: 10,
+                libUtil.insert('profiles', [null, info.username, '','','']).then(function (pid) {
+                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, 'admin', null]).then(function () {
+                        res.json({
+                            result: 0,
+                        });
+                    }, function () {
+                        res.json({
+                            result: 3,
+                            msg: 'insert users failed'
+                        });
+                    });
+                }, function () {
+                    res.json({
+                        result: 2,
+                        msg: 'insert profile failed'
+                    });
                 });
             } else {
                 res.json({
@@ -81,49 +89,12 @@ global.router.route('/register')
                     msg: 'check username failed' + checkExist
                 });
             }
+        },function () {
+            res.json({
+                result: 1,
+                msg: 'check username failed' + checkExist
+            });
         });
-        // var inserts, sqlCheck, sqlInsert, sqlInsert;
-        // //setup info check username exist
-        // sqlCheck = "SELECT * FROM ?? WHERE ?? = ?";
-        // inserts = ['users', 'username', info.username];
-        // sqlCheck = global.mysql.format(sqlCheck, inserts);
-        //setup info insert
-
-        // sqlInsert = "INSERT INTO ?? VALUES (null, ?, ?, ?, ?, ?, null)";
-        // inserts = ['users', info.username, info.password, info.access, 1, 'admin'];
-        // sqlInsert = global.mysql.format(sqlInsert, inserts);
-        //query
-        // global.connection.query(sqlCheck, function(err, rows, fields) {
-        //     if (!err) {
-        //         if (!(rows && rows.length)) {
-        //             global.connection.query(sqlInsert, function(err, rows, fields) {
-        //                 if (!err) {
-        //                     res.json({
-        //                         result: 0
-        //                     });
-        //                 }
-        //                 else {
-        //                     res.json({
-        //                         result: 1,
-        //                         msg: 'insert failed ' + err
-        //                     });
-        //                 }
-        //             });
-        //         }
-        //         else{
-        //             res.json({
-        //                 result: 2,
-        //                 msg: 'username exist'
-        //             });
-        //         }
-        //     }
-        //     else {
-        //         res.json({
-        //             result: 3,
-        //             msg: 'check failed ' + err
-        //         });
-        //     }
-        // });
 });
 
 module.exports = router;
