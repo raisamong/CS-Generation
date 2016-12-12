@@ -37,7 +37,7 @@ angular.module('csGeneration',[
         });
 })
 .controller('indexController', function ($scope, $state, userService) {
-    $state.go('dashboard.datatable');
+    $state.go('login');
 })
 .service('userService', function () {
     var user = {};

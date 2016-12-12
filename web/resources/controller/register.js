@@ -8,22 +8,13 @@ angular.module('registerModule', [])
     // <!-- end $scopes defined -->
 
     // <!-- variables function defined -->
-    var genUserInfo = function () {
-        var info = {
-            username : $scope.info.username,
-            password : $scope.info.password,
-            access : $scope.info.username,
-            code : $scope.info.code
-        };
-        return info;
-    };
     // <!-- end variables function defined -->
 
     // <!-- $scopes function defined -->
     $scope.register = function (registerForm) {
         console.log(registerForm);
-        var info  = genUserInfo();
-        registerService.register(info).then(function (returned) {
+        $scope.info.access = $scope.info.username;
+        registerService.register($scope.info).then(function (returned) {
             console.log('register succeed', returned);
             $state.go('login');
         }, function (err) {
