@@ -15,5 +15,8 @@
     "animate.css": "^3.5.2",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3"
+  },
+  "devDependencies": {
+    "angular-toastr": "^2.1.1"
   }
 }

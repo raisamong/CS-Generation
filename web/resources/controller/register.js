@@ -1,6 +1,6 @@
 angular.module('registerModule', [])
-.controller('RegisterCtrl', [ '$scope', 'registerService', '$state',
-                            function ($scope, registerService, $state) {
+.controller('RegisterCtrl', [ '$scope', 'registerService', '$state', 'toastr',
+                            function ($scope, registerService, $state, toastr) {
     // <!-- variables defined -->
     // <!-- end variables defined -->
 
@@ -16,8 +16,14 @@ angular.module('registerModule', [])
         $scope.info.access = $scope.info.username;
         registerService.register($scope.info).then(function (returned) {
             console.log('register succeed', returned);
-            $state.go('login');
+            if (!returned.result) {
+                toastr.success('Register Success');
+                $state.go('login');
+            }
+            else
+                toastr.warning('Please check your register code.');
         }, function (err) {
+            toastr.error("Register Failed");
             console.log('register failed', err);
         });
     };
@@ -37,7 +43,7 @@ angular.module('registerModule', [])
                     data: info
                 })
                 .success(function (data, status, headers, config) {
-                    !data.result ? deferred.resolve(data) : deferred.reject(data);
+                    !data.result ? deferred.resolve(data) : deferred.resolve(data);
                 })
                 .error( function (data, status, headers, config) {
                     deferred.reject(data);

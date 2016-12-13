@@ -1,13 +1,18 @@
 angular.module('csGeneration',[
     "ui.router",
     "ui.bootstrap",
+    "toastr",
     "loginModule",
     'registerModule',
     'dashboardModule',
     'datatableModule',
     'addModule'
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, toastrConfig) {
+    angular.extend(toastrConfig, {
+        positionClass: 'toast-bottom-right',
+        timeOut: 2000
+    });
     $urlRouterProvider.otherwise('/');
     $stateProvider.
         state('login', {

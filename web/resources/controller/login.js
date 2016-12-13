@@ -1,6 +1,6 @@
 angular.module('loginModule', [])
-.controller('LoginCtrl', ['$scope', '$state', 'loginService', 'userService',
-                        function($scope, $state, loginService, userService) {
+.controller('LoginCtrl', ['$scope', '$state', 'loginService', 'userService', 'toastr',
+                        function($scope, $state, loginService, userService, toastr) {
     // <!-- initial function -->
     var checkLogin = function () {
         var user = userService.getUser();
@@ -27,9 +27,15 @@ angular.module('loginModule', [])
         console.log('login', $scope.info);
         loginService.login($scope.info).then(function (returned) {
             console.log('login succeed', returned);
-            $state.go('dashboard.datatable');
+            if (!returned.result) {
+                toastr.success('Login Success');
+                $state.go('dashboard.datatable');
+            } else {
+                toastr.warning('Please check your username/password.');
+            }
         }, function (err) {
             console.log('login failed', err);
+            toastr.error('Login Failed');
         });
     };
     // <!-- end $scopes function defined -->
@@ -47,7 +53,7 @@ angular.module('loginModule', [])
                     data: info
                 })
                 .success(function (data, status, headers, config) {
-                    !data.result ? deferred.resolve(data) : deferred.reject(data);
+                    !data.result ? deferred.resolve(data) : deferred.resolve(data);
                 })
                 .error( function (data, status, headers, config) {
                     deferred.reject(data);
