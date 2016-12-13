@@ -52,4 +52,8 @@ angular.module('csGeneration',[
     this.getUser = function () {
         return user;
     };
+
+    this.clearUser = function () {
+        user ='';
+    };
 });
