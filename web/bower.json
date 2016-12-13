@@ -17,6 +17,7 @@
     "font-awesome": "^4.6.3"
   },
   "devDependencies": {
-    "angular-toastr": "^2.1.1"
+    "angular-toastr": "^2.1.1",
+    "lodash": "^4.17.2"
   }
 }

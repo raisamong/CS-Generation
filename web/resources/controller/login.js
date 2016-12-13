@@ -15,7 +15,9 @@ angular.module('loginModule', [])
     // <!-- end variables defined -->
 
     // <!-- $scopes defined -->
-
+    $scope.info = {};
+    $scope.info.username = 'raisamong';
+    $scope.info.password = 'aaaaaaaa';
     // <!-- end $scopes defined -->
 
     // <!-- variables function defined -->
@@ -28,7 +30,8 @@ angular.module('loginModule', [])
         loginService.login($scope.info).then(function (returned) {
             console.log('login succeed', returned);
             if (!returned.result) {
-                toastr.success('Login Success');
+                toastr.success('Login Success', returned.data);
+                userService.setUser(returned.data);
                 $state.go('dashboard.datatable');
             } else {
                 toastr.warning('Please check your username/password.');

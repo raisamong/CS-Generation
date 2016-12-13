@@ -47,9 +47,7 @@ angular.module('csGeneration',[
 .service('userService', function () {
     var user = {};
     this.setUser = function (info) {
-        user.access = info.access;
-        user.role = info.role;
-        user.profiles = info.profiles;
+        user = _.clone(info);
     };
     this.getUser = function () {
         return user;
