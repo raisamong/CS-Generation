@@ -4,7 +4,7 @@ angular.module('loginModule', [])
             // <!-- initial function -->
             var checkLogin = function() {
                 var user = userService.getUser();
-                console.log(user);
+                hidden.log(user);
                 if (user.profiles) {
                     $state.go('dashboard');
                 }
@@ -26,9 +26,9 @@ angular.module('loginModule', [])
 
             // <!-- $scopes function defined -->
             $scope.login = function() {
-                console.log('login', $scope.info);
+                hidden.log('login', $scope.info);
                 loginService.login($scope.info).then(function(returned) {
-                    console.log('login succeed', returned);
+                    hidden.log('login succeed', returned);
                     if (!returned.result) {
                         toastr.success('Login Success', returned.data);
                         userService.setUser(returned.data);
@@ -37,7 +37,7 @@ angular.module('loginModule', [])
                         toastr.warning('Please check your username/password.');
                     }
                 }, function(err) {
-                    console.log('login failed', err);
+                    hidden.log('login failed', err);
                     toastr.error('Login Failed');
                 });
             };
@@ -53,7 +53,7 @@ angular.module('loginModule', [])
                         url: backend + 'login',
                         headers: {
                             "Content-type": "application/json;charset=UTF-8",
-                            "X-CS-Access": 'DK'
+                            "X-CS-Access": 'PN'
                         },
                         data: info
                     })

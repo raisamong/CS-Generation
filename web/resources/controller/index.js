@@ -1,3 +1,17 @@
+pipeLog = {};
+pipeLog.intentUrl = '';
+pipeLog.log = function() {};
+
+if (!!main && main.type == 'debug' && !!console && !!pipeLog.log) {
+    if (Function.prototype.bind) {
+        pipeLog.log = Function.prototype.bind.call(console.log, console);
+    } else {
+        pipeLog.log = function() {
+            Function.prototype.apply.call(pipeLog.log, console, arguments);
+        };
+    }
+}
+
 angular.module('csGeneration', [
         "ui.router",
         "ui.bootstrap",

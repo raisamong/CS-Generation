@@ -12,10 +12,10 @@ angular.module('registerModule', [])
 
             // <!-- $scopes function defined -->
             $scope.register = function(registerForm) {
-                console.log(registerForm);
+                hidden.log(registerForm);
                 $scope.info.access = $scope.info.username;
                 registerService.register($scope.info).then(function(returned) {
-                    console.log('register succeed', returned);
+                    hidden.log('register succeed', returned);
                     if (!returned.result) {
                         toastr.success('Register Success');
                         $state.go('login');
@@ -23,7 +23,7 @@ angular.module('registerModule', [])
                         toastr.warning('Please check your register code.');
                 }, function(err) {
                     toastr.error("Register Failed");
-                    console.log('register failed', err);
+                    hidden.log('register failed', err);
                 });
             };
 
