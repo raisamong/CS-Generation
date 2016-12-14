@@ -53,6 +53,7 @@ angular.module('loginModule', [])
                         url: backend + 'login',
                         headers: {
                             "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": 'DK'
                         },
                         data: info
                     })

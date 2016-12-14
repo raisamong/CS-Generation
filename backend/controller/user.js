@@ -5,7 +5,7 @@ global.router.route('/login')
     .post(function(req, res) {
         //setup search user
         var info = libAuth.escape(req.body);
-        libUtil.select(['uid', 'access', 'pid', 'pid'], 'users', ['username', 'password'], [info.username, info.password]).then(function(user) {
+        libUtil.select(['uid', 'access', 'pid'], 'users', ['username', 'password'], [info.username, info.password]).then(function(user) {
             if (!user.result) {
                 var pid = user.data[0].pid;
                 libUtil.select('*', 'profiles', ['pid'], [pid]).then(function(profile) {
