@@ -1,13 +1,13 @@
-pipeLog = {};
-pipeLog.intentUrl = '';
-pipeLog.log = function() {};
+hidden = {};
+hidden.intentUrl = '';
+hidden.log = function() {};
 
-if (!!main && main.type == 'debug' && !!console && !!pipeLog.log) {
+if (!!main && main.type == 'debug' && !!console && !!hidden.log) {
     if (Function.prototype.bind) {
-        pipeLog.log = Function.prototype.bind.call(console.log, console);
+        hidden.log = Function.prototype.bind.call(console.log, console);
     } else {
-        pipeLog.log = function() {
-            Function.prototype.apply.call(pipeLog.log, console, arguments);
+        hidden.log = function() {
+            Function.prototype.apply.call(hidden.log, console, arguments);
         };
     }
 }
@@ -64,10 +64,46 @@ angular.module('csGeneration', [
             user = _.clone(info);
         };
         this.getUser = function() {
-            return user;
+            return _.clone(user);
         };
 
         this.clearUser = function() {
             user = '';
+        };
+    })
+    .factory('cookiesService', function($http, $q) {
+        return {
+            set: function(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            },
+            remove: function(cname) {
+                var d = new Date();
+                d.setTime(d.getTime());
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = cname + '=;expires=' + expires;
+            },
+            get: function(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1);
+                    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            },
+            clear: function() {
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+            }
         };
     });

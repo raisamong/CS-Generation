@@ -5,7 +5,15 @@ global.router.route('/login')
     .post(function(req, res) {
         //setup search user
         var info = libAuth.escape(req.body);
-        libUtil.select(['uid', 'access', 'pid'], 'users', ['username', 'password'], [info.username, info.password]).then(function(user) {
+        var field, value;
+        if (info.password) {
+            field = ['username', 'password'];
+            value = [info.username, info.password];
+        } else {
+            field = ['username', 'access'];
+            value = [info.username, req.body.access];
+        }
+        libUtil.select(['uid', 'access', 'pid'], 'users', field, value).then(function(user) {
             if (!user.result) {
                 var pid = user.data[0].pid;
                 libUtil.select('*', 'profiles', ['pid'], [pid]).then(function(profile) {

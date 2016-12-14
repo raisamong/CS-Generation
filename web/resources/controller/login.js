@@ -1,12 +1,38 @@
 angular.module('loginModule', [])
     .controller('LoginCtrl', ['$scope', '$state', 'loginService', 'userService', 'toastr',
-        function($scope, $state, loginService, userService, toastr) {
+        'cookiesService',
+        function($scope, $state, loginService, userService, toastr, cookiesService) {
             // <!-- initial function -->
+            var autoLogin = function() {
+                var authData = {
+                    username: cookiesService.get('username'),
+                    access: cookiesService.get('access')
+                };
+                hidden.log(authData);
+                if (authData.username && authData.access) {
+                    loginService.login(authData).then(function(userData) {
+                        loginSuccess(userData);
+                    });
+                }
+            };
+
+            var loginSuccess = function(userData) {
+                toastr.success('Login Success', userData.data);
+                userService.setUser(userData.data);
+                cookiesService.set('username', $scope.info.username);
+                cookiesService.set('access', userData.data.access);
+                $state.go('dashboard.datatable');
+            };
+
             var checkLogin = function() {
                 var user = userService.getUser();
                 hidden.log(user);
-                if (user.profiles) {
-                    $state.go('dashboard');
+                if (user.access) {
+                    hidden.log(1);
+                    $state.go('dashboard.datatable');
+                } else {
+                    hidden.log(2);
+                    autoLogin();
                 }
             };
             checkLogin();
@@ -27,12 +53,10 @@ angular.module('loginModule', [])
             // <!-- $scopes function defined -->
             $scope.login = function() {
                 hidden.log('login', $scope.info);
-                loginService.login($scope.info).then(function(returned) {
-                    hidden.log('login succeed', returned);
-                    if (!returned.result) {
-                        toastr.success('Login Success', returned.data);
-                        userService.setUser(returned.data);
-                        $state.go('dashboard.datatable');
+                loginService.login($scope.info).then(function(userData) {
+                    hidden.log('login succeed', userData);
+                    if (!userData.result) {
+                        loginSuccess(userData);
                     } else {
                         toastr.warning('Please check your username/password.');
                     }
