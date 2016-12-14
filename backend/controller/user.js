@@ -5,10 +5,10 @@ global.router.route('/login')
     .post(function(req, res) {
         //setup search user
         var info = libAuth.escape(req.body);
-        libUtil.select(['uid', 'access', 'pid', 'pid'], 'users', ['username', 'password'],[info.username, info.password]).then(function (user) {
+        libUtil.select(['uid', 'access', 'pid', 'pid'], 'users', ['username', 'password'], [info.username, info.password]).then(function(user) {
             if (!user.result) {
-                var pid = user.data[0].pid
-                libUtil.select('*', 'profiles',['pid'],[pid]).then(function (profile) {
+                var pid = user.data[0].pid;
+                libUtil.select('*', 'profiles', ['pid'], [pid]).then(function(profile) {
                     if (!profile.result) {
                         var profileReturned = _.assign(profile.data[0], user.data[0]);
                         res.json({
@@ -21,7 +21,7 @@ global.router.route('/login')
                             msg: 'get profile failed'
                         });
                     }
-                }, function () {
+                }, function() {
                     res.json({
                         result: 2,
                         msg: 'get profile failed'
@@ -33,16 +33,16 @@ global.router.route('/login')
                     msg: 'get users failed'
                 });
             }
-        }, function () {
+        }, function() {
             res.json({
                 result: 1,
                 msg: 'get users failed'
             });
         });
-});
+    });
 
 global.router.route('/register')
-    .post(function (req, res) {
+    .post(function(req, res) {
         if (req.body.code != 'pipenew') {
             res.json({
                 result: 4,
@@ -51,20 +51,20 @@ global.router.route('/register')
             return;
         }
         var info = libAuth.escape(req.body);
-        libUtil.select('*', 'users',['username'],[info.username]).then(function (checkExist) {
+        libUtil.select('*', 'users', ['username'], [info.username]).then(function(checkExist) {
             if (checkExist.result == 1) {
-                libUtil.insert('profiles', [null, req.body.username, '','','']).then(function (pid) {
-                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, 'admin', null]).then(function () {
+                libUtil.insert('profiles', [null, req.body.username, '', '', '']).then(function(pid) {
+                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, 'admin', null]).then(function() {
                         res.json({
                             result: 0,
                         });
-                    }, function () {
+                    }, function() {
                         res.json({
                             result: 3,
                             msg: 'insert users failed'
                         });
                     });
-                }, function () {
+                }, function() {
                     res.json({
                         result: 2,
                         msg: 'insert profile failed'
@@ -76,12 +76,12 @@ global.router.route('/register')
                     msg: 'check username failed' + checkExist
                 });
             }
-        },function () {
+        }, function() {
             res.json({
                 result: 1,
                 msg: 'check username failed' + checkExist
             });
         });
-});
+    });
 
 module.exports = router;

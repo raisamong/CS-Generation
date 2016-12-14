@@ -5,24 +5,22 @@ var pwHash = function(passwd, enc) {
     return !!passwd ? hash.update(passwd).digest(enc ? enc : 'hex') : passwd;
 };
 
-var genAccess = function (id) {
+var genAccess = function(id) {
     var access = id + Date.now();
     return pwHash(access);
-}
+};
 
 var escape = function(data) {
     var info = {};
     var temp;
-    _.forEach(data ,function(value, key) {
+    _.forEach(data, function(value, key) {
         if (key == 'password' || key == 'username') {
             temp = pwHash(value);
             info[key] = global.connection.escape(temp);
-        }
-        else if (key == 'access'){
+        } else if (key == 'access') {
             temp = genAccess(value);
             info[key] = global.connection.escape(temp);
-        }
-        else{
+        } else {
             info[key] = global.connection.escape(value);
         }
     });

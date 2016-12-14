@@ -5,19 +5,15 @@
         </div>
         <div class="panel-body">
             <form ng-submit="login(loginForm)" name="loginForm">
-                <div class="form-group"
-                     ng-class="{'has-error': loginForm.username.$invalid &&
+                <div class="form-group" ng-class="{'has-error': loginForm.username.$invalid &&
                                  loginForm.username.$dirty}">
                     <label for="username">Username *:</label>
-                    <input ng-model="info.username" type="text" required
-                            class="form-control" name="username" minlength="6">
+                    <input ng-model="info.username" type="text" required class="form-control" name="username" minlength="6">
                 </div>
-                <div class="form-group"
-                     ng-class="{'has-error': loginForm.password.$invalid &&
+                <div class="form-group" ng-class="{'has-error': loginForm.password.$invalid &&
                             loginForm.password.$dirty}">
                     <label for="password">Password *:</label>
-                    <input ng-model="info.password" type="password" required
-                            class="form-control" name="password" minlength="8">
+                    <input ng-model="info.password" type="password" required class="form-control" name="password" minlength="8">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
