@@ -19,9 +19,6 @@ angular.module('datatableModule', [])
             }];
         }
     ])
-    .service('dataService', function () {
-        var self = this;
-    })
     .directive('tableItem', function() {
         return {
             restrict: 'E',
