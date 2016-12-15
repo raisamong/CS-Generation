@@ -43,8 +43,8 @@ global.router.route('/login')
             }
         }, function() {
             res.json({
-                result: 1,
-                msg: 'get users failed'
+                result: 3,
+                msg: 'connection lost'
             });
         });
     });

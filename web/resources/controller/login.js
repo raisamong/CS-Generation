@@ -12,6 +12,8 @@ angular.module('loginModule', [])
                 if (authData.username && authData.access) {
                     loginService.login(authData).then(function(userData) {
                         loginSuccess(userData);
+                    }, function(err) {
+                        loginFail(err.result, true);
                     });
                 }
             };
@@ -22,6 +24,19 @@ angular.module('loginModule', [])
                 cookiesService.set('username', $scope.info.username);
                 cookiesService.set('access', userData.data.access);
                 $state.go('dashboard.datatable');
+            };
+
+            var loginFail = function(result, notShow) {
+                hidden.log('login failed');
+                if (!notShow) {
+                    if (result == 1) {
+                        toastr.warning('Please check your username/password.');
+                    } else if (result == 3) {
+                        toastr.error('Connection Lost');
+                    } else {
+                        toastr.error('Login Failed');
+                    }
+                }
             };
 
             var checkLogin = function() {
@@ -55,14 +70,9 @@ angular.module('loginModule', [])
                 hidden.log('login', $scope.info);
                 loginService.login($scope.info).then(function(userData) {
                     hidden.log('login succeed', userData);
-                    if (!userData.result) {
-                        loginSuccess(userData);
-                    } else {
-                        toastr.warning('Please check your username/password.');
-                    }
+                    loginSuccess(userData);
                 }, function(err) {
-                    hidden.log('login failed', err);
-                    toastr.error('Login Failed');
+                    loginFail(err.result);
                 });
             };
             // <!-- end $scopes function defined -->
@@ -82,10 +92,11 @@ angular.module('loginModule', [])
                         data: info
                     })
                     .success(function(data, status, headers, config) {
+                        hidden.log(data);
                         if (!data.result) {
                             deferred.resolve(data);
                         } else {
-                            deferred.resolve(data);
+                            deferred.reject(data);
                         }
                     })
                     .error(function(data, status, headers, config) {
