@@ -7,7 +7,9 @@ global.router.route('/student/add')
         console.log(info);
         libUtil.select(['id'], 'students', ['id'], [info.id]).then(function(checkExist) {
             if (checkExist.result == 1) {
+                libUtil.insert('students',[]).then(function () {
 
+                });
             } else if (checkExist.result === 0) {
                 res.json({
                     result: 1,

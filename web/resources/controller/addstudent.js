@@ -76,7 +76,7 @@ angular.module('addModule', [])
                         data: info
                     })
                     .success(function(data, status, headers, config) {
-                        hidden.log(data);
+                        hidden.log('[Add-Student]', data);
                         if (!data.result) {
                             deferred.resolve(data);
                         } else {

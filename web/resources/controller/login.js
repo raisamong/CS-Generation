@@ -8,7 +8,7 @@ angular.module('loginModule', [])
                     username: cookiesService.get('username'),
                     access: cookiesService.get('access')
                 };
-                hidden.log(authData);
+                hidden.log('[Login]', authData);
                 if (authData.username && authData.access) {
                     loginService.login(authData).then(function(userData) {
                         loginSuccess(userData);
@@ -27,7 +27,7 @@ angular.module('loginModule', [])
             };
 
             var loginFail = function(result, notShow) {
-                hidden.log('login failed');
+                hidden.log('[Login] login failed');
                 if (!notShow) {
                     if (result == 1) {
                         toastr.warning('Please check your username/password.');
@@ -41,12 +41,10 @@ angular.module('loginModule', [])
 
             var checkLogin = function() {
                 var user = userService.getUser();
-                hidden.log(user);
+                hidden.log('[Login]', user);
                 if (user.access) {
-                    hidden.log(1);
                     $state.go('dashboard.datatable');
                 } else {
-                    hidden.log(2);
                     autoLogin();
                 }
             };
@@ -67,9 +65,9 @@ angular.module('loginModule', [])
 
             // <!-- $scopes function defined -->
             $scope.login = function() {
-                hidden.log('login', $scope.info);
+                hidden.log('[Login]', $scope.info);
                 loginService.login($scope.info).then(function(userData) {
-                    hidden.log('login succeed', userData);
+                    hidden.log('[Login] login succeed', userData);
                     loginSuccess(userData);
                 }, function(err) {
                     loginFail(err.result);
@@ -92,7 +90,7 @@ angular.module('loginModule', [])
                         data: info
                     })
                     .success(function(data, status, headers, config) {
-                        hidden.log(data);
+                        hidden.log('[Login]', data);
                         if (!data.result) {
                             deferred.resolve(data);
                         } else {
