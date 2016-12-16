@@ -16,14 +16,19 @@ angular.module('registerModule', [])
                 $scope.info.access = $scope.info.username;
                 registerService.register($scope.info).then(function(returned) {
                     hidden.log('register succeed', returned);
-                    if (!returned.result) {
-                        toastr.success('Register Success');
-                        $state.go('login');
-                    } else
-                        toastr.warning('Please check your register code.');
+                    toastr.success('Register Success');
+                    $state.go('login');
                 }, function(err) {
-                    toastr.error("Register Failed");
                     hidden.log('register failed', err);
+                    if (err.result == 1) {
+                        toastr.warning('Please check your register code.');
+                    } else if (err.result == 4) {
+                        toastr.warning('Connection Lost');
+                    } else if (err.result == 5) {
+                        toastr.warning('Wrong Register Code');
+                    } else {
+                        toastr.error("Register Failed");
+                    }
                 });
             };
 
@@ -46,7 +51,7 @@ angular.module('registerModule', [])
                         if (!data.result) {
                             deferred.resolve(data);
                         } else {
-                            deferred.resolve(data);
+                            deferred.reject(data);
                         }
                     })
                     .error(function(data, status, headers, config) {

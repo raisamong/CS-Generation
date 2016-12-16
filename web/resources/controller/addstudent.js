@@ -1,6 +1,15 @@
 angular.module('addModule', [])
     .controller('AddCtrl', ['$scope', '$state', 'studentService', 'toastr',
         function($scope, $state, studentService, toastr) {
+            // TODO hacked
+            $scope.info = {
+                code: '5621601785',
+                name: 'jirapat',
+                surname: 'thanapingpong',
+                tel: '0823252881',
+                facebook: 'testFacebook',
+                address: 'testAddress'
+            };
             var genCloseFriend = function() {
                 var information = '';
                 if ($scope.info.cfname) {

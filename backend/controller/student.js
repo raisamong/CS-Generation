@@ -5,9 +5,29 @@ global.router.route('/student/add')
         //setup search user
         var info = libAuth.escape(req.body);
         console.log(info);
-        res.json({
-            result: 0
+        libUtil.select(['id'], 'students', ['id'], [info.id]).then(function(checkExist) {
+            if (checkExist.result == 1) {
+
+            } else if (checkExist.result === 0) {
+                res.json({
+                    result: 1,
+                    msg: 'student exist'
+                });
+            } else {
+                res.json({
+                    result: 3,
+                    msg: 'check student error'
+                });
+            }
+        }, function() {
+            res.json({
+                result: 2,
+                msg: 'connection lost'
+            });
         });
+        // res.json({
+        //     result: 0
+        // });
         // var field, value;
         // if (info.password) {
         //     field = ['username', 'password'];
@@ -50,49 +70,6 @@ global.router.route('/student/add')
         //         msg: 'connection lost'
         //     });
         // });
-    });
-
-global.router.route('/register')
-    .post(function(req, res) {
-        if (req.body.code != 'pipenew') {
-            res.json({
-                result: 4,
-                msg: 'wrong code'
-            });
-            return;
-        }
-        var info = libAuth.escape(req.body);
-        libUtil.select('*', 'users', ['username'], [info.username]).then(function(checkExist) {
-            if (checkExist.result == 1) {
-                libUtil.insert('profiles', [null, req.body.username, '', '', '']).then(function(pid) {
-                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, 'admin', null]).then(function() {
-                        res.json({
-                            result: 0,
-                        });
-                    }, function() {
-                        res.json({
-                            result: 3,
-                            msg: 'insert users failed'
-                        });
-                    });
-                }, function() {
-                    res.json({
-                        result: 2,
-                        msg: 'insert profile failed'
-                    });
-                });
-            } else {
-                res.json({
-                    result: 1,
-                    msg: 'check username failed' + checkExist
-                });
-            }
-        }, function() {
-            res.json({
-                result: 1,
-                msg: 'check username failed' + checkExist
-            });
-        });
     });
 
 module.exports = router;

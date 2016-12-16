@@ -53,7 +53,7 @@ global.router.route('/register')
     .post(function(req, res) {
         if (req.body.code != 'pipenew') {
             res.json({
-                result: 4,
+                result: 5,
                 msg: 'wrong code'
             });
             return;
@@ -86,8 +86,8 @@ global.router.route('/register')
             }
         }, function() {
             res.json({
-                result: 1,
-                msg: 'check username failed' + checkExist
+                result: 4,
+                msg: 'database error' + checkExist
             });
         });
     });
