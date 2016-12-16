@@ -5,8 +5,15 @@ var select = function(selected, table, where, conditions) {
     return new promise.Promise(function(resolve, reject) {
         var sql = 'SELECT ';
         var inserts = [table];
-        if (!table) reject();
-        if (!selected) selected = "*";
+
+        if (!table) {
+            reject();
+            return;
+        }
+
+        if (!selected) {
+            selected = "*";
+        }
 
         if (selected == '*') {
             sql += '* FROM ' + '??';
@@ -43,10 +50,7 @@ var select = function(selected, table, where, conditions) {
                     });
                 }
             } else {
-                reject({
-                    result: 2,
-                    msg: 'select data err' + err
-                });
+                reject();
             }
         });
     });
