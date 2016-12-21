@@ -32,6 +32,7 @@ angular.module('addModule', [])
                     tel: $scope.info.tel || '',
                     facebook: $scope.info.facebook || '',
                     address: $scope.info.address || '',
+                    year: $scope.info.code.substring(0, 2)
                 };
                 information.cf = genCloseFriend();
                 return information;
@@ -42,22 +43,17 @@ angular.module('addModule', [])
                 $scope.info = {};
             };
 
-            var addError = function(result) {
-                if (result == 1) {
-                    toastr.error('This student already added');
-                } else if (result == 2) {
-                    toastr.error('Connection Lost');
-                } else {
-                    toastr.error('Add student failed');
-                }
+            var addError = function(message) {
+                toastr.error(message);
             };
 
             $scope.add = function() {
                 var info = genStudentData();
+                console.log(info);
                 studentService.add(info).then(function(result) {
                     addSuccess();
                 }, function(err) {
-                    addError(err.result);
+                    addError(err);
                 });
             };
         }
@@ -77,10 +73,10 @@ angular.module('addModule', [])
                     })
                     .success(function(data, status, headers, config) {
                         hidden.log('[Add-Student]', data);
-                        if (!data.result) {
+                        if (data.result === 0) {
                             deferred.resolve(data);
                         } else {
-                            deferred.reject(data);
+                            deferred.reject(data.msg);
                         }
                     })
                     .error(function(data, status, headers, config) {
