@@ -98,7 +98,9 @@ angular.module('loginModule', [])
                         }
                     })
                     .error(function(data, status, headers, config) {
-                        deferred.reject(data);
+                        deferred.reject({
+                            result: 3
+                        });
                     });
                 return deferred.promise;
             }

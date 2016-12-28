@@ -55,7 +55,7 @@ global.router.route('/student/list')
                         res.json({
                             result: 0,
                             data: infoList.data,
-                            row: count
+                            count: count
                         });
                     });
                 } else if (infoList.result == 1) {

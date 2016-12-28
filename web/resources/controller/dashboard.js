@@ -56,7 +56,7 @@ angular.module('dashboardModule', [])
                     .success(function(data, status, headers, config) {
                         hidden.log('[List-Student]', data);
                         if (data.result === 0) {
-                            deferred.resolve(data.data);
+                            deferred.resolve(data);
                         } else {
                             deferred.reject(data);
                         }
