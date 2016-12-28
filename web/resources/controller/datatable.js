@@ -1,6 +1,11 @@
 angular.module('datatableModule', [])
-    .controller('DatatableCtrl', ['$scope', '$state', 'userService',
-        function($scope, $state, userService) {
+    .controller('DatatableCtrl', ['$scope', '$state', 'userService', 'studentService',
+        function($scope, $state, userService, studentService) {
+            $scope.allYear = [56, 57, 58, 59];
+            $scope.yearSelected = $scope.allYear[0];
+            studentService.list({year: '56', limit:[0,2]}).then(function () {
+
+            });
             $scope.itemsTable = [{
                 imgUrl: '',
                 id: '5621606021',
@@ -17,6 +22,10 @@ angular.module('datatableModule', [])
                 name: '5',
                 surname: '6'
             }];
+
+            $scope.listYear = function (year) {
+                $scope.yearSelected = year;
+            };
         }
     ])
     .directive('tableItem', function() {

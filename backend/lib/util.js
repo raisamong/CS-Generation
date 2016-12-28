@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var promise = require('bluebird');
 
-var select = function(selected, table, where, conditions) {
+var select = function(selected, table, where, conditions, limit) {
     return new promise.Promise(function(resolve, reject) {
         var sql = 'SELECT ';
         var inserts = [table];
@@ -32,6 +32,14 @@ var select = function(selected, table, where, conditions) {
                 inserts.push(field, conditions[key]);
             });
             sql = sql.substring(0, sql.length - 4);
+        }
+
+        if (limit) {
+            if (Array.isArray(limit)){
+                sql += 'LIMIT ' + limit[0] + ',' + limit[1];
+            } else {
+                sql += 'LIMIT ' + limit;
+            }
         }
 
         sql = global.mysql.format(sql, inserts);
