@@ -45,8 +45,28 @@ global.router.route('/student/list')
         //setup search user
         var info = libAuth.escape(req.body);
         console.log(info);
-        libUtil.select('*', 'students', ['year'], [info.year], req.body.limit).then(function(checkExist) {
-            console.log(checkExist);
+        libUtil.select('*', 'students', ['year'], [info.year], req.body.limit).then(function(infoList) {
+            if (infoList.result === 0) {
+                res.json({
+                    result: 0,
+                    data: infoList.data
+                });
+            } else if (infoList.result == 1){
+                res.json({
+                    result: 1,
+                    msg: 'No information'
+                });
+            } else {
+                res.json({
+                    result: 1,
+                    msg: 'Get Information failed'
+                });
+            }
+        }, function() {
+            res.json({
+                result: 2,
+                msg: 'Connection Lost'
+            });
         });
     });
 

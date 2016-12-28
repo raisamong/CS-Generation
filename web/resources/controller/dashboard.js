@@ -38,7 +38,7 @@ angular.module('dashboardModule', [])
                         }
                     })
                     .error(function(data, status, headers, config) {
-                        deferred.reject(data);
+                        deferred.reject("Add Student failed");
                     });
                 return deferred.promise;
             },
@@ -56,13 +56,13 @@ angular.module('dashboardModule', [])
                     .success(function(data, status, headers, config) {
                         hidden.log('[List-Student]', data);
                         if (data.result === 0) {
-                            deferred.resolve(data);
+                            deferred.resolve(data.data);
                         } else {
                             deferred.reject(data.msg);
                         }
                     })
                     .error(function(data, status, headers, config) {
-                        deferred.reject(data);
+                        deferred.reject("Get Information failed");
                     });
                 return deferred.promise;
             }
