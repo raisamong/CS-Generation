@@ -26,7 +26,8 @@ angular.module('csGeneration', [
     .config(function($stateProvider, $urlRouterProvider, toastrConfig) {
         angular.extend(toastrConfig, {
             positionClass: 'toast-bottom-right',
-            timeOut: 2000
+            timeOut: 2000,
+            preventOpenDuplicates: true
         });
         $urlRouterProvider.otherwise('/');
         $stateProvider.

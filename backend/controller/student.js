@@ -4,11 +4,12 @@ var libUtil = require('../lib/util.js');
 global.router.route('/student/add')
     .post(function(req, res) {
         //setup search user
-        var info = libAuth.escape(req.body);
+        var info = req.body;
+        var infoEscaper = libAuth.escape(req.body);
         console.log(info);
-        libUtil.select(['id'], 'students', ['id'], [info.code]).then(function(checkExist) {
+        libUtil.select(['id'], 'students', ['id'], [infoEscaper.code]).then(function(checkExist) {
             if (checkExist.result == 1) {
-                libUtil.insert('students', [info.code, info.year, info.name,
+                libUtil.insert('students', [infoEscaper.code, infoEscaper.year, info.name,
                     info.surname, info.tel, info.facebook, info.address, info.cf
                 ]).then(function() {
                     res.json({
@@ -43,9 +44,9 @@ global.router.route('/student/add')
 global.router.route('/student/list')
     .post(function(req, res) {
         //setup search user
-        var info = libAuth.escape(req.body);
-        console.log(info);
-        libUtil.select('*', 'students', ['year'], [info.year], req.body.limit).then(function(infoList) {
+        var info = req.body;
+        var infoEscaper = libAuth.escape(req.body);
+        libUtil.select('*', 'students', ['year'], [infoEscaper.year], req.body.limit).then(function(infoList) {
             if (infoList.result === 0) {
                 res.json({
                     result: 0,
@@ -58,7 +59,7 @@ global.router.route('/student/list')
                 });
             } else {
                 res.json({
-                    result: 1,
+                    result: 2,
                     msg: 'Get Information failed'
                 });
             }

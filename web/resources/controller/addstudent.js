@@ -41,6 +41,7 @@ angular.module('addModule', [])
             var addSuccess = function() {
                 toastr.success('Add student success');
                 $scope.info = {};
+                $scope.addForm.$setPristine();
             };
 
             var addError = function(message) {

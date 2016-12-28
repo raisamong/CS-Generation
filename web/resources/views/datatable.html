@@ -18,12 +18,15 @@
             </div>
             <h4>Computer-Science students</h4>
         </div>
-        <div class="panel-body" style="padding:0px; height:0px;">
+        <div class="panel-body" style="padding:0px; height:0px;" ng-show="hasInfo">
             <ul class="list-group">
                 <table-item ng-repeat="item in itemsTable | filter : itemSearch | orderBy : 'id'" item="item">
 
                 </table-item>
             </ul>
+        </div>
+        <div class="panel-body" ng-show="!hasInfo">
+            <h1 style="text-align:center;">No Information</h1>
         </div>
     </div>
 </div>

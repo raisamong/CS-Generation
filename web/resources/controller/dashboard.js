@@ -58,7 +58,7 @@ angular.module('dashboardModule', [])
                         if (data.result === 0) {
                             deferred.resolve(data.data);
                         } else {
-                            deferred.reject(data.msg);
+                            deferred.reject(data);
                         }
                     })
                     .error(function(data, status, headers, config) {

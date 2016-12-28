@@ -3,21 +3,26 @@ angular.module('datatableModule', [])
         function($scope, $state, userService, studentService, toastr) {
             $scope.allYear = ['56', '57', '58', '59'];
             $scope.yearSelected = $scope.allYear[0];
-            var inited = false;
-            var init = function () {
-                if (!inited) {
-                    studentService.list({year: $scope.yearSelected, limit: 10}).then(function (studentList) {
-                        $scope.itemsTable = studentList;
-                        inited = true;
-                    }, function (msg) {
-                        toastr.error(msg);
-                    });
-                }
+            $scope.hasInfo = false;
+            var init = function() {
+                studentService.list({
+                    year: $scope.yearSelected,
+                    limit: 10
+                }).then(function(studentList) {
+                    $scope.itemsTable = studentList;
+                    $scope.hasInfo = true;
+                }, function(err) {
+                    if (err.result !=1) {
+                        toastr.error(err.msg);
+                    }
+                    $scope.hasInfo = false;
+                });
             };
             init();
 
-            $scope.listYear = function (year) {
+            $scope.listYear = function(year) {
                 $scope.yearSelected = year;
+                init();
             };
         }
     ])
