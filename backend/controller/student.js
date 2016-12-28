@@ -47,28 +47,35 @@ global.router.route('/student/list')
         var info = req.body;
         var infoEscaper = libAuth.escape(req.body);
         libUtil.select('*', 'students', ['year'], [infoEscaper.year], req.body.limit).then(function(infoList) {
-            if (infoList.result === 0) {
-                res.json({
-                    result: 0,
-                    data: infoList.data
-                });
-            } else if (infoList.result == 1){
-                res.json({
-                    result: 1,
-                    msg: 'No information'
-                });
-            } else {
+                if (infoList.result === 0) {
+                    libUtil.count('students', {
+                        key: 'year',
+                        value: infoEscaper.year
+                    }).then(function(count) {
+                        res.json({
+                            result: 0,
+                            data: infoList.data,
+                            row: count
+                        });
+                    });
+                } else if (infoList.result == 1) {
+                    res.json({
+                        result: 1,
+                        msg: 'No information'
+                    });
+                } else {
+                    res.json({
+                        result: 2,
+                        msg: 'Get Information failed'
+                    });
+                }
+            },
+            function() {
                 res.json({
                     result: 2,
-                    msg: 'Get Information failed'
+                    msg: 'Connection Lost'
                 });
-            }
-        }, function() {
-            res.json({
-                result: 2,
-                msg: 'Connection Lost'
             });
-        });
     });
 
 module.exports = router;

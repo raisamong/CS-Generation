@@ -35,7 +35,7 @@ var select = function(selected, table, where, conditions, limit) {
         }
 
         if (limit) {
-            if (Array.isArray(limit)){
+            if (Array.isArray(limit)) {
                 sql += 'LIMIT ' + limit[0] + ',' + limit[1];
             } else {
                 sql += 'LIMIT ' + limit;
@@ -91,7 +91,28 @@ var insert = function(table, values) {
     });
 };
 
+var count = function(table, condition) {
+    return new promise.Promise(function(resolve, reject) {
+        var sql = 'SELECT COUNT(*) FROM ' + table;
+        var insert = [];
+        if (condition) {
+            sql += ' WHERE ' + condition.key + " = ?";
+            insert.push(condition.value);
+        }
+        sql = global.mysql.format(sql, insert);
+        global.connection.query(sql, function(err, rows) {
+            if (!err) {
+                resolve((rows[0]['COUNT(*)']));
+            } else {
+                console.log(err);
+                resolve(0);
+            }
+        });
+    });
+};
+
 module.exports = {
     select: select,
-    insert: insert
+    insert: insert,
+    count: count
 };
