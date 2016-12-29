@@ -78,4 +78,34 @@ global.router.route('/student/list')
             });
     });
 
+global.router.route('/student/delete/:id')
+    .delete(function(req, res) {
+        var studentId = req.params.id;
+        libUtil.select(['id'], 'students', ['id'], [studentId]).then(function(exists) {
+            if (exists.result === 0) {
+                libUtil.dataDelete('students', ['id'], [studentId]).then(function(deleted) {
+                    if (deleted) {
+                        res.json({
+                            result: 0
+                        });
+                    } else {
+                        res.json({
+                            result: 2,
+                            msg: 'Delete student failed'
+                        });
+                    }
+                });
+            } else {
+                res.json({
+                    result: 2,
+                    msg: 'Student not exists'
+                });
+            }
+        }, function() {
+            res.json({
+                result: 2,
+                msg: 'Connection Lost'
+            });
+        });
+    });
 module.exports = router;

@@ -67,11 +67,14 @@ angular.module('datatableModule', [])
 
             $scope.deleteStudent = function (id, index) {
                 hidden.log(id, index);
-                studentService.delete(id).then(function () {
-
-                }, function () {
-
-                });
+                if (confirm('Are you sure to delete this student?')) {
+                    studentService.delete(id).then(function () {
+                        $scope.itemsTable.splice(index, 1);
+                        toastr.success('Delete stundent succeed');
+                    }, function (msg) {
+                        toastr.error(msg);
+                    });
+                }
             };
         }
     ])
@@ -84,4 +87,83 @@ angular.module('datatableModule', [])
                 deleteStudent: '&'
             }
         };
+    })
+    .factory('studentService', function($q, $http, cookiesService) {
+        var service = {
+            add: function(info) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'POST',
+                        url: backend + 'student/add',
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        },
+                        data: info
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[Add-Student]', data);
+                        if (data.result === 0) {
+                            deferred.resolve(data);
+                        } else {
+                            deferred.reject(data.msg);
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject("Add Student failed");
+                    });
+                return deferred.promise;
+            },
+            list: function (info) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'POST',
+                        url: backend + 'student/list',
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        },
+                        data: info
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[List-Student]', data);
+                        if (data.result === 0) {
+                            deferred.resolve(data);
+                        } else {
+                            deferred.reject(data);
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject("Get Information failed");
+                    });
+                return deferred.promise;
+            },
+            delete: function (id) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'DELETE',
+                        url: backend + 'student/delete/' + id,
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        }
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[Delete-Student]', data);
+                        if (!data.result) {
+                            deferred.resolve();
+                        } else {
+                            deferred.reject(data.msg);
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject("Delete student failed");
+                    });
+                return deferred.promise;
+            }
+        };
+        return service;
     });

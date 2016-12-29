@@ -92,6 +92,31 @@ var insert = function(table, values) {
     });
 };
 
+var dataDelete = function (table, where, conditions) {
+    return new promise.Promise(function (resolve, reject) {
+        var sql = 'DELETE FROM ' + table;
+        var inserts = [];
+        if (where && conditions && where.length == conditions.length) {
+            sql += ' WHERE ';
+            _.forEach(where, function(field, key) {
+                sql += '?? = ? AND ';
+                inserts.push(field, conditions[key]);
+            });
+            sql = sql.substring(0, sql.length - 4);
+        }
+        console.log(sql);
+        sql = global.mysql.format(sql, inserts);
+        global.connection.query(sql, function(err, rows) {
+            if (!err) {
+                resolve(true);
+            } else {
+                console.log(err);
+                resolve(false);
+            }
+        });
+    });
+};
+
 var count = function(table, condition) {
     return new promise.Promise(function(resolve, reject) {
         var sql = 'SELECT COUNT(*) FROM ' + table;
@@ -115,5 +140,6 @@ var count = function(table, condition) {
 module.exports = {
     select: select,
     insert: insert,
+    dataDelete: dataDelete,
     count: count
 };
