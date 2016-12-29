@@ -16,16 +16,17 @@ angular.module('dashboardModule', [])
             };
         }
     ])
-    .factory('studentService', function($q, $http) {
+    .factory('studentService', function($q, $http, cookiesService) {
         var service = {
             add: function(info) {
                 var deferred = $q.defer();
+                var access = cookiesService.get('access');
                 $http({
                         method: 'POST',
                         url: backend + 'student/add',
                         headers: {
                             "Content-type": "application/json;charset=UTF-8",
-                            "X-CS-Access": 'PN'
+                            "X-CS-Access": access
                         },
                         data: info
                     })
@@ -44,12 +45,13 @@ angular.module('dashboardModule', [])
             },
             list: function (info) {
                 var deferred = $q.defer();
+                var access = cookiesService.get('access');
                 $http({
                         method: 'POST',
                         url: backend + 'student/list',
                         headers: {
                             "Content-type": "application/json;charset=UTF-8",
-                            "X-CS-Access": 'PN'
+                            "X-CS-Access": access
                         },
                         data: info
                     })
@@ -60,6 +62,27 @@ angular.module('dashboardModule', [])
                         } else {
                             deferred.reject(data);
                         }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject("Get Information failed");
+                    });
+                return deferred.promise;
+            },
+            delete: function (id) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'DELETE',
+                        url: backend + 'student/delete/' + id,
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        },
+                        data: info
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[Delete-Student]', data);
+                        deferred.resolve();
                     })
                     .error(function(data, status, headers, config) {
                         deferred.reject("Get Information failed");

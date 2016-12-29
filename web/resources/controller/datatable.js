@@ -65,8 +65,13 @@ angular.module('datatableModule', [])
                 }
             };
 
-            $scope.deleteStudent = function (id) {
-                hidden.log(id);
+            $scope.deleteStudent = function (id, index) {
+                hidden.log(id, index);
+                studentService.delete(id).then(function () {
+
+                }, function () {
+
+                });
             };
         }
     ])

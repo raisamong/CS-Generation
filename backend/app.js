@@ -6,6 +6,7 @@ var mysql = require('mysql');
 var db = require('./db');
 var bodyParser = require('body-parser');
 var route = require('./api/route.js');
+var middleware = require('./middleware/middleware');
 
 global._ = _;
 global.router = router;
@@ -15,7 +16,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 })); // support encoded body
 app.use(function(req, res, next) {
-
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4000');
 
@@ -30,6 +30,18 @@ app.use(function(req, res, next) {
     next();
 });
 
+var setupMiddleware = function () {
+    app.use('/student', function (req, res, next) {
+        console.log('Request URL:', req.originalUrl);
+        var access = req.headers['x-cs-access'];
+        middleware.checkAccess(access).then(function () {
+            next();
+        }, function (err) {
+            res.json(err);
+        });
+    });
+};
+
 var setupMysql = function() {
     var connection_object = new db();
     var connection = connection_object.connection;
@@ -37,14 +49,15 @@ var setupMysql = function() {
 };
 
 var setupRoute = function() {
+    setupMiddleware();
     _.forEach(route, function(path) {
         var module = require(path);
         app.use('/', module);
     });
 };
 setupRoute();
-
 global.connection = setupMysql();
 global.mysql = mysql;
+
 
 module.exports = app;

@@ -25,7 +25,7 @@ var select = function(selected, table, where, conditions, limit) {
             sql += ' FROM ' + '??';
         }
 
-        if (where.length == conditions.length) {
+        if (where && conditions && where.length == conditions.length) {
             sql += ' WHERE ';
             _.forEach(where, function(field, key) {
                 sql += '?? = ? AND ';
@@ -58,6 +58,7 @@ var select = function(selected, table, where, conditions, limit) {
                     });
                 }
             } else {
+                console.log(err);
                 reject();
             }
         });
