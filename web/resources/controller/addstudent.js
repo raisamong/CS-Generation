@@ -1,8 +1,8 @@
 angular.module('addModule', [])
-    .controller('AddCtrl', ['$scope', '$state', 'studentService', 'toastr',
-        function($scope, $state, studentService, toastr) {
+    .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr',
+        function($scope, $state, $stateParams, studentService, toastr) {
             // TODO hacked
-            $scope.info = {
+            $scope.info = $stateParams.info || {
                 code: '5621601785',
                 name: 'jirapat',
                 surname: 'thanapingpong',
@@ -10,6 +10,9 @@ angular.module('addModule', [])
                 facebook: 'testFacebook',
                 address: 'testAddress'
             };
+            if ($stateParams.info) {
+                $scope.update = true;
+            }
             var genCloseFriend = function() {
                 var information = '';
                 if ($scope.info.cfname) {
@@ -39,8 +42,12 @@ angular.module('addModule', [])
             };
 
             var addSuccess = function() {
-                toastr.success('Add student success');
-                // $scope.info = {};
+                if ($scope.update) {
+                    toastr.success('Update student succeed');
+                } else {
+                    toastr.success('Add student succeed');
+                    $scope.info = {};
+                }
                 $scope.addForm.$setPristine();
             };
 
@@ -51,11 +58,19 @@ angular.module('addModule', [])
             $scope.add = function() {
                 var info = genStudentData();
                 console.log(info);
-                studentService.add(info).then(function(result) {
-                    addSuccess();
-                }, function(err) {
-                    addError(err);
-                });
+                if ($scope.update) {
+                    studentService.update(info).then(function(result) {
+                        addSuccess();
+                    }, function(err) {
+                        addError(err);
+                    });
+                } else {
+                    studentService.add(info).then(function(result) {
+                        addSuccess();
+                    }, function(err) {
+                        addError(err);
+                    });
+                }
             };
         }
     ]);

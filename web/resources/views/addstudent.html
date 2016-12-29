@@ -1,7 +1,8 @@
 <div class="container">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h4>Add Student</h4>
+            <h4 ng-show="!update">Add Student</h4>
+            <h4 ng-show="update">Update Student</h4>
         </div>
         <div class="panel-body">
             <form ng-submit="add(addForm)" name="addForm">
@@ -41,7 +42,8 @@
                     <input ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Address..">
                 </div>
                 <button type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
-                <button type="submit" class="btn btn-primary" style="float:right;">Submit</button>
+                <button ng-show="!update" type="submit" class="btn btn-primary" style="float:right;">Submit</button>
+                <button ng-show="update"type="submit" class="btn btn-success" style="float:right;">Update</button>
                 <button type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
             </form>
         </div>

@@ -53,6 +53,7 @@ angular.module('csGeneration', [
             })
             .state('dashboard.add', {
                 url: '/add',
+                params: {info : null},
                 templateUrl: './resources/views/addstudent.html',
                 controller: 'AddCtrl'
             });

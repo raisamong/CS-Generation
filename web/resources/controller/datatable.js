@@ -76,6 +76,11 @@ angular.module('datatableModule', [])
                     });
                 }
             };
+            $scope.update = function (item) {
+                hidden.log(item);
+                item.code = item.id.substring(1, item.id.length -1);
+                $state.go('dashboard.add', {info: item});
+            };
         }
     ])
     .directive('tableItem', function() {
@@ -84,7 +89,8 @@ angular.module('datatableModule', [])
             templateUrl: '../resources/views/directives/item_table.html',
             scope: {
                 item: '=',
-                deleteStudent: '&'
+                deleteStudent: '&',
+                update: '&'
             }
         };
     })
@@ -112,6 +118,31 @@ angular.module('datatableModule', [])
                     })
                     .error(function(data, status, headers, config) {
                         deferred.reject("Add Student failed");
+                    });
+                return deferred.promise;
+            },
+            update: function(info) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'PUT',
+                        url: backend + 'student/update',
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        },
+                        data: info
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[Update-Student]', data);
+                        if (data.result === 0) {
+                            deferred.resolve(data);
+                        } else {
+                            deferred.reject(data.msg);
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject("Update Student failed");
                     });
                 return deferred.promise;
             },
