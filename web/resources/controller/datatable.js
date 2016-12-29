@@ -1,7 +1,7 @@
 angular.module('datatableModule', [])
     .controller('DatatableCtrl', ['$scope', '$state', 'userService', 'studentService', 'toastr',
         function($scope, $state, userService, studentService, toastr) {
-            $scope.allYear = ['56', '57', '58', '59'];
+            $scope.allYear = calYear();
             $scope.yearSelected = $scope.allYear[0];
             $scope.hasInfo = false;
             $scope.pages = [];
@@ -38,6 +38,16 @@ angular.module('datatableModule', [])
                 });
             };
             init();
+
+            function calYear() {
+                var years = [];
+                var d = new Date();
+                var thisYear = (d.getFullYear() + 543) - 2500;
+                for (var i = 56; i <= thisYear; i++) {
+                    years.push(i + '');
+                }
+                return years;
+            }
 
             $scope.listYear = function(year) {
                 $scope.yearSelected = year;
