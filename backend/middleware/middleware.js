@@ -8,13 +8,13 @@ var checkAccess = function (access) {
                 resolve();
             } else {
                 reject({
-                    result: 1,
+                    result: 2,
                     msg: "No Permission"
                 });
             }
         }, function () {
             reject({
-                result: 1,
+                result: 2,
                 msg: "No Permission"
             });
         });

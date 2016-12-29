@@ -5,6 +5,7 @@ angular.module('dashboardModule', [])
                 $scope.user = userService.getUser();
                 if (!$scope.user.access) {
                     $state.go('login');
+                    return false;
                 }
             };
             checkCurrentUser();
