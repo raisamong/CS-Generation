@@ -5,11 +5,13 @@ angular.module('datatableModule', [])
             $scope.yearSelected = $scope.allYear[0];
             $scope.hasInfo = false;
             $scope.pages = [];
+            $scope.pageSelected = 1;
 
-            var calPage = function (countRaw) {
-                var countPage = countRaw/10;
-                var additional = 1 ;
-                if (countRaw%10 === 0) {
+            var calPage = function(countRaw) {
+                $scope.pages = [];
+                var countPage = countRaw / 10;
+                var additional = 1;
+                if (countRaw % 10 === 0) {
                     additional = 0;
                 }
                 if (countPage > 1) {
@@ -19,16 +21,17 @@ angular.module('datatableModule', [])
                 }
             };
 
-            var init = function() {
+            var init = function(limit) {
                 studentService.list({
                     year: $scope.yearSelected,
-                    limit: 10
+                    limit: limit || 10
                 }).then(function(studentList) {
+                    $scope.itemsTable = [];
                     $scope.itemsTable = studentList.data;
                     calPage(studentList.count);
                     $scope.hasInfo = true;
                 }, function(err) {
-                    if (err.result !=1) {
+                    if (err.result != 1) {
                         toastr.error(err.msg);
                     }
                     $scope.hasInfo = false;
@@ -39,6 +42,17 @@ angular.module('datatableModule', [])
             $scope.listYear = function(year) {
                 $scope.yearSelected = year;
                 init();
+            };
+
+            $scope.changePage = function(page) {
+                if ($scope.pages.indexOf(page) > -1) {
+                    $scope.pageSelected = page;
+                    var limit = [];
+                    limit.push((page - 1) * 10);
+                    limit.push((page * 10) - 1);
+                    hidden.log(limit);
+                    init(limit);
+                }
             };
         }
     ])
