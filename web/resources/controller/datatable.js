@@ -64,6 +64,10 @@ angular.module('datatableModule', [])
                     init(limit);
                 }
             };
+
+            $scope.deleteStudent = function (id) {
+                hidden.log(id);
+            };
         }
     ])
     .directive('tableItem', function() {
@@ -71,7 +75,8 @@ angular.module('datatableModule', [])
             restrict: 'E',
             templateUrl: '../resources/views/directives/item_table.html',
             scope: {
-                item: '='
+                item: '=',
+                deleteStudent: '&'
             }
         };
     });
