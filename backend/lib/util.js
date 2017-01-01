@@ -137,9 +137,41 @@ var count = function(table, condition) {
     });
 };
 
+var update = function (table, info, where) {
+    return new promise.Promise(function (resolve, reject) {
+        var sql = "UPDATE " + table + ' SET ';
+        var inserts = [];
+        _.forEach(info, function (value, key) {
+            if (value) {
+                sql += key + "= ? ,";
+                inserts.push(value);
+            }
+        });
+        sql = sql.substring(0, sql.length - 1);
+        sql += " WHERE ";
+        _.forEach(where, function (value, key) {
+            if (value) {
+                sql += '?? = ? AND ';
+                inserts.push(key, value);
+            }
+        });
+        sql = sql.substring(0, sql.length - 4);
+        sql = global.mysql.format(sql, inserts);
+        console.log(sql);
+        global.connection.query(sql, function(err, rows) {
+            if (!err) {
+                resolve();
+            } else {
+                console.log(err);
+                reject();
+            }
+        });
+    });
+};
 module.exports = {
     select: select,
     insert: insert,
     dataDelete: dataDelete,
-    count: count
+    count: count,
+    update: update
 };

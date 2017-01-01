@@ -108,4 +108,43 @@ global.router.route('/student/delete/:id')
             });
         });
     });
+
+global.router.route('/student/update')
+    .put(function(req, res) {
+        var info = req.body;
+        var infoEscaper = libAuth.escape(req.body);
+        console.log(info);
+        libUtil.select(['id'], 'students', ['id'], [infoEscaper.code]).then(function(checkExist) {
+            if (checkExist.result === 0) {
+                libUtil.update('students', {
+                    name: info.name,
+                    surname: info.surname,
+                    tel: info.tel,
+                    facebook: info.facebook,
+                    address: info.address,
+                    cf: info.cf
+                }, {
+                    id: infoEscaper.code
+                }).then(function () {
+                    res.json({ result: 0});
+                });
+            } else if (checkExist.result == 1) {
+                res.json({
+                    result: 1,
+                    msg: 'This student not exists'
+                });
+            } else {
+                console.log('check student error');
+                res.json({
+                    result: 3,
+                    msg: 'Update student failed'
+                });
+            }
+        }, function() {
+            res.json({
+                result: 2,
+                msg: 'Connection Lost'
+            });
+        });
+    });
 module.exports = router;
