@@ -76,15 +76,17 @@ angular.module('addModule', [])
             };
 
             $scope.uploadImage = function (image) {
-                console.log(image);
-                var reader = new FileReader();
-                reader.readAsDataURL(image);
-                reader.onload = function () {
-                    console.log(reader.result);
-                    uploadService(reader.result, image.name).then(function () {
-                        hidden.log('uploaded');
-                    });
-                };
+                if (image) {
+                    console.log(image);
+                    var reader = new FileReader();
+                    reader.readAsDataURL(image);
+                    reader.onload = function () {
+                        console.log(reader.result);
+                        uploadService(reader.result, image.name).then(function (url) {
+                            hidden.log('uploaded', url);
+                        });
+                    };
+                }
             };
         }
     ]);

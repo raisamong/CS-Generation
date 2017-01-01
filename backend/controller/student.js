@@ -150,13 +150,6 @@ global.router.route('/student/update')
         });
     });
 
-global.router.route('/student/upload')
-    .post(function(req, res) {
-        console.log('upload', req);
-        res.json({
-            result: 0
-        });
-    });
 
 
 module.exports = router;

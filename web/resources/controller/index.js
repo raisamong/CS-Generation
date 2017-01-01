@@ -140,10 +140,11 @@ angular.module('csGeneration', [
                     }
                 }
             }).then(function(resp) {
+                console.log(resp);
                 if (!resp.data.result) {
-                    deferred.resolve(resp.data.url);
+                    deferred.resolve(resp.data.data.url);
                 } else {
-                    deferred.reject(resp);
+                    deferred.reject(resp.data.result);
                 }
             }, function(resp) {
                 deferred.reject(resp);

@@ -4,6 +4,13 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var request = require('request');
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'ddh0udtsk',
+  api_key: '229892396977635',
+  api_secret: 'd5Lf3el5eXtGbfGjGatMgYohsqs'
+});
 
 app.use(multer({dest:__dirname+'/file/uploads/'}).any());
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
@@ -22,35 +29,12 @@ app.get('/', function(req, res) {
 app.post('/upload',function(req,res){
     var file = req.files[0];
     var info = req.body.otherInfo;
-    console.log(info);
-    fs.readFile(file.path, function (err, fileData) {
-        request({
-            method: 'POST',
-            uri: info.path,
-            headers: {
-                "Content-type": "multipart/form-data",
-                "X-CS-Access": info.access
-            },
-            multipart: [{
-                'Content-Disposition': 'form-data; name="' + info.type + '";filename="' + file.originalname + '"',
-                'Content-Type': file.mimetype,
-                body: fileData
-            }]
-        }, function (error, response, body) {
-            fs.unlink(file.path);
-            console.log(body);
-            if (!error && response.statusCode == 200) {
-                body = JSON.parse(body);
-                res.json({
-                    result: 0,
-                    url: body.url
-                });
-            } else {
-                res.json({
-                    result: 1,
-                    err: error
-                });
-            }
+    cloudinary.uploader.upload(file.path, function(url) {
+        fs.unlink(file.path);
+        console.log('aaaaaaaaaaa', url);
+        res.json({
+            result: 0,
+            data: url
         });
     });
 });
