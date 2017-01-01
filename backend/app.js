@@ -7,6 +7,17 @@ var db = require('./db');
 var bodyParser = require('body-parser');
 var route = require('./api/route.js');
 var middleware = require('./middleware/middleware');
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'ddh0udtsk',
+  api_key: '229892396977635',
+  api_secret: 'd5Lf3el5eXtGbfGjGatMgYohsqs'
+});
+
+// cloudinary.uploader.upload("https://pbs.twimg.com/profile_images/649233999328448512/z7wgEquV.jpg", function(result) {
+//   console.log(result)
+// });
 
 global._ = _;
 global.router = router;

@@ -5,6 +5,9 @@
             <h4 ng-show="update">Update Student</h4>
         </div>
         <div class="panel-body">
+                <button ngf-select="uploadImage($file)" accept="image/*"  ngf-max-size="1MB">
+                    Upload
+                </button>
             <form ng-submit="add(addForm)" name="addForm">
                 <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&
                                  addForm.code.$dirty}">

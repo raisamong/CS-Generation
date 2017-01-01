@@ -53,7 +53,9 @@ angular.module('csGeneration', [
             })
             .state('dashboard.add', {
                 url: '/add',
-                params: {info : null},
+                params: {
+                    info: null
+                },
                 templateUrl: './resources/views/addstudent.html',
                 controller: 'AddCtrl'
             });
@@ -110,50 +112,42 @@ angular.module('csGeneration', [
             }
         };
     })
-    .factory('uploadService', function(Upload, $q) {
-        return function(file, path, type, name) {
-            // var deferred = $q.defer();
-            // var access = shappyCookie.get('user_access');
-            // var blob;
-            // if (file.indexOf('base64')) {
-            //     var imageType = file.substring(file.indexOf('data:image/')+11, file.indexOf(';base64'));
-            //     if (imageType == "jpeg") {
-            //         imageType = 'jpg';
-            //     }
-            //     var fileName = (new Date().getTime()) + "." + imageType;
-            //     shappyMain.log('fileName', fileName);
-            //     blob = Upload.dataUrltoBlob(file, fileName);
-            // } else {
-            //     blob = file;
-            // }
-            // shappyMain.log({
-            //     file: blob,
-            //     otherInfo: {
-            //         access: access,
-            //         path: backend + path,
-            //         type: type
-            //     }
-            // });
-            // Upload.upload({
-            //     url: '/upload',
-            //     data: {
-            //         file: blob,
-            //         otherInfo: {
-            //             access: access,
-            //             path: backend + path,
-            //             type: type
-            //         },
-            //         key: name? Upload.rename(blob, encodeURIComponent(name)) : ''
-            //     }
-            // }).then(function (resp) {
-            //     if (!resp.data.result) {
-            //         deferred.resolve(resp.data.url);
-            //     } else {
-            //         deferred.reject(resp);
-            //     }
-            // }, function (resp) {
-            //     deferred.reject(resp);
-            // });
-            // return deferred.promise;
+    .factory('uploadService', function(Upload, $q, cookiesService) {
+        return function(file, name) {
+            var deferred = $q.defer();
+            var blob;
+            var access = cookiesService.get('access');
+            if (file.indexOf('base64')) {
+                blob = Upload.dataUrltoBlob(file, name);
+            } else {
+                blob = file;
+            }
+
+            hidden.log({
+                file: blob,
+                otherInfo: {
+                    path: backend + 'student/upload',
+                    access: access
+                }
+            });
+            Upload.upload({
+                url: '/upload',
+                data: {
+                    file: blob,
+                    otherInfo: {
+                        path: backend + 'student/upload',
+                        access: access
+                    }
+                }
+            }).then(function(resp) {
+                if (!resp.data.result) {
+                    deferred.resolve(resp.data.url);
+                } else {
+                    deferred.reject(resp);
+                }
+            }, function(resp) {
+                deferred.reject(resp);
+            });
+            return deferred.promise;
         };
     });

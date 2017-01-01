@@ -1,6 +1,8 @@
 angular.module('addModule', [])
     .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr',
-        function($scope, $state, $stateParams, studentService, toastr) {
+        'uploadService',
+        function($scope, $state, $stateParams, studentService, toastr,
+        uploadService ) {
             // TODO hacked
             $scope.info = $stateParams.info || {
                 code: '5621601785',
@@ -71,6 +73,18 @@ angular.module('addModule', [])
                         addError(err);
                     });
                 }
+            };
+
+            $scope.uploadImage = function (image) {
+                console.log(image);
+                var reader = new FileReader();
+                reader.readAsDataURL(image);
+                reader.onload = function () {
+                    console.log(reader.result);
+                    uploadService(reader.result, image.name).then(function () {
+                        hidden.log('uploaded');
+                    });
+                };
             };
         }
     ]);
