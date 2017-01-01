@@ -36,6 +36,7 @@ app.use(function(req, res, next) {
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', 'Content-type,X-CS-Access');
     res.contentType('application/json');
+    console.log('ying');
     // console.log(req.headers);
     // Pass to next layer of middleware
     next();

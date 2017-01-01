@@ -125,8 +125,10 @@ global.router.route('/student/update')
                     cf: info.cf
                 }, {
                     id: infoEscaper.code
-                }).then(function () {
-                    res.json({ result: 0});
+                }).then(function() {
+                    res.json({
+                        result: 0
+                    });
                 });
             } else if (checkExist.result == 1) {
                 res.json({
@@ -147,4 +149,14 @@ global.router.route('/student/update')
             });
         });
     });
+
+global.router.route('/student/upload')
+    .post(function(req, res) {
+        console.log('upload', req);
+        res.json({
+            result: 0
+        });
+    });
+
+
 module.exports = router;
