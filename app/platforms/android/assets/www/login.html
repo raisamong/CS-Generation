@@ -1,0 +1,48 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">Login</h1>
+    </div>
+    <div class="panel-body">
+        <form ng-submit="login(loginForm)" name="loginForm">
+            <div class="form-group" ng-class="{'has-error': loginForm.username.$invalid &&
+                             loginForm.username.$dirty}">
+                <label for="username">Username *:</label>
+                <input placeholder="username.." ng-model="info.username" type="text" required class="form-control" name="username" minlength="6">
+            </div>
+            <div class="form-group" ng-class="{'has-error': loginForm.password.$invalid &&
+                        loginForm.password.$dirty}">
+                <label for="password">Password *:</label>
+                <input placeholder="password.." ng-model="info.password" type="password" required class="form-control" name="password" minlength="8">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+        </form>
+    </div>
+    <div class="panel-footer loginFooter">
+        <a ui-sref="register">Register</a>
+    </div> -->
+<!-- </div>
+<!-- <div class="">
+    <div class="">
+        <h1>Login</h1>
+    </div>
+    <div class="">
+        <form ng-submit="login(loginForm)" name="loginForm">
+            <div class="form-group" ng-class="{'has-error': loginForm.username.$invalid &&
+                             loginForm.username.$dirty}">
+                <label for="username">Username *:</label>
+                <input placeholder="username.." ng-model="info.username" type="text" required class="form-control" name="username" minlength="6">
+            </div>
+            <div class="form-group" ng-class="{'has-error': loginForm.password.$invalid &&
+                        loginForm.password.$dirty}">
+                <label for="password">Password *:</label>
+                <input placeholder="password.." ng-model="info.password" type="password" required class="form-control" name="password" minlength="8">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+        </form>
+    </div>
+    <div class="">
+        <a ui-sref="register">Register</a>
+    </div>
+</div> -->

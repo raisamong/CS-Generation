@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 ng-show="!update">Add Student</h4>
+            <h4 ng-show="update">Update Student</h4>
+        </div>
+        <div class="panel-body">
+            <div class="imageProfile"
+                ng-style="{'background-image':'url('+(info.image ? info.image:'./resources/img/default_profile_img.png')+')'}"
+                ngf-select="uploadImage($file)" accept="image/*"  ngf-max-size="1MB">
+            </div>
+            <form ng-submit="add(addForm)" name="addForm">
+                <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&
+                                 addForm.code.$dirty}">
+                    <label for="code">Student Code *:</label>
+                    <input placeholder="56216XXXXX" ng-model="info.code" type="text" ng-disabled="update" required class="form-control" name="code" minlength="10" maxlength="10">
+                </div>
+                <div class="form-group" ng-class="{'has-error': addForm.name.$invalid &&
+                                 addForm.name.$dirty}">
+                    <label for="name">Firstname *:</label>
+                    <input placeholder="Firstname.." ng-model="info.name" type="text" required class="form-control" name="name" maxlength="50">
+                </div>
+                <div class="form-group" ng-class="{'has-error': addForm.surname.$invalid &&
+                                 addForm.surname.$dirty}">
+                    <label for="surname">Lastname *:</label>
+                    <input placeholder="Lastname.." ng-model="info.surname" type="text" required class="form-control" name="surname" maxlength="50">
+                </div>
+                <div class="form-group" ng-class="{'has-error': addForm.tel.$invalid &&
+                                 addForm.tel.$dirty}">
+                    <label for="tel">Tel:</label>
+                    <input placeholder="0998887777" ng-model="info.tel" type="tel" class="form-control" name="tel" maxlength="10" pattern="^0[0-9]{9}">
+                </div>
+                <div class="form-group">
+                    <label for="facebook">Facebook:</label>
+                    <input placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cf">Close Friend:</label>
+                    <input ng-model="info.cfname" type="text" class="form-control" name="cfname" placeholder="Firstname..">
+                    <input ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
+                    <input ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Address..">
+                </div>
+                <button type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
+                <button ng-disabled="loading" ng-show="!update" type="submit" class="btn btn-primary" style="float:right;">Submit</button>
+                <button ng-disabled="loading" ng-show="update" type="submit" class="btn btn-success" style="float:right;">Update</button>
+                <button type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -31,11 +31,11 @@ angular.module('csGeneration', [
         "ui.bootstrap",
         "toastr",
         'ngFileUpload',
-        // "loginModule",
-        // 'registerModule',
-        // 'dashboardModule',
-        // 'datatableModule',
-        // 'addModule'
+        "loginModule",
+        'registerModule',
+        'dashboardModule',
+        'datatableModule',
+        'addModule'
     ])
     .config(function($stateProvider, $urlRouterProvider, toastrConfig) {
         angular.extend(toastrConfig, {
@@ -47,22 +47,22 @@ angular.module('csGeneration', [
         $stateProvider.
         state('login', {
                 url: '/login',
-                templateUrl: './resources/views/login.html',
+                templateUrl: 'login.html',
                 controller: 'LoginCtrl'
             })
             .state('register', {
                 url: '/register',
-                templateUrl: './resources/views/register.html',
+                templateUrl: 'register.html',
                 controller: 'RegisterCtrl'
             })
             .state('dashboard', {
                 url: '/dashboard',
-                templateUrl: './resources/views/dashboard.html',
+                templateUrl: 'dashboard.html',
                 controller: 'DashboardCtrl'
             })
             .state('dashboard.datatable', {
                 url: '/datatable',
-                templateUrl: './resources/views/datatable.html',
+                templateUrl: 'datatable.html',
                 controller: 'DatatableCtrl'
             })
             .state('dashboard.add', {
@@ -70,7 +70,7 @@ angular.module('csGeneration', [
                 params: {
                     info: null
                 },
-                templateUrl: './resources/views/addstudent.html',
+                templateUrl: 'addstudent.html',
                 controller: 'AddCtrl'
             });
     })

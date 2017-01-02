@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-
+        <meta http-equiv="Content-Security-Policy" content="default-src *;
+        style-src 'self' 'unsafe-inline' https:;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
+        img-src 'self' data: *;
+        frame-src 'self' gap: *;
+        connect-src 'self' http: https: wss:;">
+        
         <title>CS-Generation</title>
         <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
@@ -24,8 +29,13 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/conf.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/login.js" ></script>
+        <script type="text/javascript" src="js/register.js" ></script>
+        <script type="text/javascript" src="js/dashboard.js"></script>
+        <script type="text/javascript" src="js/datatable.js"></script>
+        <script type="text/javascript" src="js/addstudent.js"></script>
     </head>
-    <body>
+    <body ng-controller="indexController">
         <div ui-view class="animated fadeIn">
 
         </div>
