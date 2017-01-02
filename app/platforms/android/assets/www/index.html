@@ -14,7 +14,6 @@
         <link rel="stylesheet" type="text/css" href="css/datatable.css">
 
         <script type="text/javascript" src="components/angular/angular.min.js"></script>
-        <script type="text/javascript" src="components/angular/angular-animate.min.js"></script>
         <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
         <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
@@ -22,16 +21,13 @@
         <script type="text/javascript" src="components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
         <script type="text/javascript" src="components/lodash/dist/lodash.min.js"></script>
         <script type="text/javascript" src="components/ng-file-upload/ng-file-upload.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/conf.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+        <div ui-view class="animated fadeIn">
+
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
