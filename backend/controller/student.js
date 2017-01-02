@@ -10,7 +10,7 @@ global.router.route('/student/add')
         libUtil.select(['id'], 'students', ['id'], [infoEscaper.code]).then(function(checkExist) {
             if (checkExist.result == 1) {
                 libUtil.insert('students', [infoEscaper.code, infoEscaper.year, info.name,
-                    info.surname, info.tel, info.facebook, info.address, info.cf
+                    info.surname, info.tel, info.facebook, info.address, info.cf, info.image
                 ]).then(function() {
                     res.json({
                         result: 0

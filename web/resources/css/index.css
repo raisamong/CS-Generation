@@ -8,6 +8,16 @@
 .loginFooter {
     text-align: center;
 }
+
 .loginFooter a {
     cursor: pointer;
+}
+
+.imageProfile {
+    cursor: pointer;
+    background-size: cover;
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    margin: auto;
 }

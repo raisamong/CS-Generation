@@ -37,7 +37,8 @@ angular.module('addModule', [])
                     tel: $scope.info.tel || '',
                     facebook: $scope.info.facebook || '',
                     address: $scope.info.address || '',
-                    year: $scope.info.code.substring(0, 2)
+                    year: $scope.info.code.substring(0, 2),
+                    image: $scope.info.image
                 };
                 information.cf = genCloseFriend();
                 return information;
@@ -77,15 +78,23 @@ angular.module('addModule', [])
 
             $scope.uploadImage = function (image) {
                 if (image) {
-                    console.log(image);
-                    var reader = new FileReader();
-                    reader.readAsDataURL(image);
-                    reader.onload = function () {
-                        console.log(reader.result);
-                        uploadService(reader.result, image.name).then(function (url) {
-                            hidden.log('uploaded', url);
-                        });
-                    };
+                    if (!$scope.loading) {
+                        $scope.loading = true;
+                        console.log(image);
+                        var reader = new FileReader();
+                        reader.readAsDataURL(image);
+                        reader.onload = function () {
+                            console.log(reader.result);
+                            uploadService(reader.result, image.name).then(function (url) {
+                                hidden.log('uploaded', url);
+                                $scope.info.image = url;
+                                $scope.loading = false;
+                            }, function () {
+                                $scope.loading = true;
+                                toastr.error('Upload image error');
+                            });
+                        };
+                    }
                 }
             };
         }

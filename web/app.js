@@ -31,7 +31,6 @@ app.post('/upload',function(req,res){
     var info = req.body.otherInfo;
     cloudinary.uploader.upload(file.path, function(url) {
         fs.unlink(file.path);
-        console.log('aaaaaaaaaaa', url);
         res.json({
             result: 0,
             data: url
