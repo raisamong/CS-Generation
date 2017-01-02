@@ -96,11 +96,11 @@ angular.module('datatableModule', [])
             }
         };
     })
-    .factory('studentService', function($q, $http, cookiesService) {
+    .factory('studentService', function($q, $http) {
         var service = {
             add: function(info) {
                 var deferred = $q.defer();
-                var access = cookiesService.get('access');
+                var access = window.localStorage.getItem('access');
                 $http({
                         method: 'POST',
                         url: backend + 'student/add',
@@ -125,7 +125,7 @@ angular.module('datatableModule', [])
             },
             update: function(info) {
                 var deferred = $q.defer();
-                var access = cookiesService.get('access');
+                var access = window.localStorage.getItem('access');
                 $http({
                         method: 'PUT',
                         url: backend + 'student/update',
@@ -150,7 +150,7 @@ angular.module('datatableModule', [])
             },
             list: function(info) {
                 var deferred = $q.defer();
-                var access = cookiesService.get('access');
+                var access = window.localStorage.getItem('access');
                 $http({
                         method: 'POST',
                         url: backend + 'student/list',
@@ -178,7 +178,7 @@ angular.module('datatableModule', [])
             },
             delete: function(id) {
                 var deferred = $q.defer();
-                var access = cookiesService.get('access');
+                var access = window.localStorage.getItem('access');
                 $http({
                         method: 'DELETE',
                         url: backend + 'student/delete/' + id,

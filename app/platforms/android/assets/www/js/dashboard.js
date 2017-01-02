@@ -12,7 +12,8 @@ angular.module('dashboardModule', [])
 
             $scope.logout = function() {
                 userService.clearUser();
-                cookiesService.clear();
+                window.localStorage.setItem('username', null);
+                window.localStorage.setItem('access', null);
                 $state.go('login');
             };
         }
