@@ -65,21 +65,23 @@ angular.module('datatableModule', [])
                 }
             };
 
-            $scope.deleteStudent = function (id, index) {
+            $scope.deleteStudent = function(id, index) {
                 hidden.log(id, index);
                 if (confirm('Are you sure to delete this student?')) {
-                    studentService.delete(id).then(function () {
+                    studentService.delete(id).then(function() {
                         $scope.itemsTable.splice(index, 1);
                         toastr.success('Delete stundent succeed');
-                    }, function (msg) {
+                    }, function(msg) {
                         toastr.error(msg);
                     });
                 }
             };
-            $scope.update = function (item) {
+            $scope.update = function(item) {
                 hidden.log(item);
-                item.code = item.id.substring(1, item.id.length -1);
-                $state.go('dashboard.add', {info: item});
+                item.code = item.id.substring(1, item.id.length - 1);
+                $state.go('dashboard.add', {
+                    info: item
+                });
             };
         }
     ])
@@ -146,7 +148,7 @@ angular.module('datatableModule', [])
                     });
                 return deferred.promise;
             },
-            list: function (info) {
+            list: function(info) {
                 var deferred = $q.defer();
                 var access = cookiesService.get('access');
                 $http({
@@ -167,11 +169,14 @@ angular.module('datatableModule', [])
                         }
                     })
                     .error(function(data, status, headers, config) {
-                        deferred.reject("Get Information failed");
+                        deferred.reject({
+                            result: 1,
+                            msg: "Get Information failed"
+                        });
                     });
                 return deferred.promise;
             },
-            delete: function (id) {
+            delete: function(id) {
                 var deferred = $q.defer();
                 var access = cookiesService.get('access');
                 $http({
