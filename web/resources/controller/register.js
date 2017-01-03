@@ -37,6 +37,7 @@ angular.module('registerModule', [])
     .factory('registerService', function($http, $q) {
         var service = {
             register: function(info) {
+                info.role = 'admin';
                 var deferred = $q.defer();
                 $http({
                         method: 'POST',

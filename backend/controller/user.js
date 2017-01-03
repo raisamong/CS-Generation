@@ -51,18 +51,21 @@ global.router.route('/login')
 
 global.router.route('/register')
     .post(function(req, res) {
-        if (req.body.code != 'pipenew') {
-            res.json({
-                result: 5,
-                msg: 'wrong code'
-            });
-            return;
+        var role = req.body.role || 'user';
+        if (role == 'admin') {
+            if (req.body.code != 'pipenew') {
+                res.json({
+                    result: 5,
+                    msg: 'wrong code'
+                });
+                return;
+            }
         }
         var info = libAuth.escape(req.body);
         libUtil.select('*', 'users', ['username'], [info.username]).then(function(checkExist) {
             if (checkExist.result == 1) {
                 libUtil.insert('profiles', [null, req.body.username, '', '', '']).then(function(pid) {
-                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, 'admin', null]).then(function() {
+                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, role, null]).then(function() {
                         res.json({
                             result: 0,
                         });
