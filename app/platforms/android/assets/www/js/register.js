@@ -12,6 +12,7 @@ angular.module('registerModule', [])
 
             // <!-- $scopes function defined -->
             $scope.register = function(registerForm) {
+                $scope.info.username = $scope.info.username.toLowerCase();
                 $scope.info.access = $scope.info.username;
                 registerService.register($scope.info).then(function(returned) {
                     hidden.log('[Register] register succeed', returned);
@@ -37,6 +38,7 @@ angular.module('registerModule', [])
     .factory('registerService', function($http, $q) {
         var service = {
             register: function(info) {
+                info.role = 'user';
                 var deferred = $q.defer();
                 $http({
                         method: 'POST',

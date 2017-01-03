@@ -6,6 +6,7 @@ global.router.route('/login')
         //setup search user
         var info = libAuth.escape(req.body);
         var field, value;
+        var from = req.body.from;
         if (info.password) {
             field = ['username', 'password'];
             value = [info.username, info.password];
@@ -13,8 +14,19 @@ global.router.route('/login')
             field = ['username', 'access'];
             value = [info.username, req.body.access];
         }
-        libUtil.select(['uid', 'access', 'pid'], 'users', field, value).then(function(user) {
-            if (!user.result) {
+        libUtil.select(['uid', 'access', 'pid', 'role'], 'users', field, value).then(function(user) {
+            if (user.result === 0) {
+                if (from == 'web') {
+                    var role = user.data[0].role;
+                    console.log(user.data[0].role);
+                    if (role != 'admin') {
+                        res.json({
+                            result: 4,
+                            msg: 'not admin'
+                        });
+                        return false;
+                    }
+                }
                 var pid = user.data[0].pid;
                 libUtil.select('*', 'profiles', ['pid'], [pid]).then(function(profile) {
                     if (!profile.result) {

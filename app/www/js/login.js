@@ -65,6 +65,7 @@ angular.module('loginModule', [])
 
             // <!-- $scopes function defined -->
             $scope.login = function() {
+                $scope.info.username = $scope.info.username.toLowerCase();
                 hidden.log('[Login]', $scope.info);
                 loginService.login($scope.info).then(function(userData) {
                     hidden.log('[Login] login succeed', userData);
@@ -79,6 +80,7 @@ angular.module('loginModule', [])
     .factory('loginService', function($http, $q) {
         var service = {
             login: function(info) {
+                info.from = "app";
                 var deferred = $q.defer();
                 $http({
                         method: 'POST',
