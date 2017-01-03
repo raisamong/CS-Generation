@@ -1,0 +1,31 @@
+.item-div-image {
+    width: 75px;
+    height: 75px;
+    float: left;
+}
+
+.item-image {
+    width: 75px;
+    height: 75px;
+    border-radius: 75%
+}
+
+.item-div-info {
+    float: left;
+    width: calc(100% - 125px);
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.item-info-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-option {
+    float:left;
+    margin-top: 24px;
+    margin-left: 10px;
+}

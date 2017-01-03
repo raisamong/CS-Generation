@@ -1,12 +1,12 @@
-<div class="container">
+<div class="container" style="padding:0px">
     <div class="panel panel-info">
-        <div class="panel-heading">
-            <h4 ng-show="!update">Add Student</h4>
-            <h4 ng-show="update">Update Student</h4>
+        <div class="panel-heading" ui-sref="dashboard.datatable">
+            <h4 ng-show="!update">< Add Student</h4>
+            <h4 ng-show="update">< Update Student</h4>
         </div>
         <div class="panel-body">
             <div class="imageProfile"
-                ng-style="{'background-image':'url('+(info.image ? info.image:'./resources/img/default_profile_img.png')+')'}"
+                ng-style="{'background-image':'url('+(info.image ? info.image:'img/default_profile_img.png')+')'}"
                 ngf-select="uploadImage($file)" accept="image/*"  ngf-max-size="1MB">
             </div>
             <form ng-submit="add(addForm)" name="addForm">
