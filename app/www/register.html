@@ -2,7 +2,7 @@
     <header>
         <h1>Register</h1>
     </header>
-    <article>
+    <article style="padding-top: 30%">
         <form ng-submit="register(registerForm)" name="registerForm">
             <div class="form-group" ng-class="{'has-error': registerForm.username.$invalid &&
                              registerForm.username.$dirty}">
@@ -28,9 +28,10 @@
                 <label for="code">Register Code *:</label>
                 <input placeholder="register code.." ng-model="info.code" type="password" required class="form-control" name="code">
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-            <button type="reset" class="btn btn-default">Reset</button>
-        </form>
+            <div style="text-align:center;">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </div </form>
     </article>
     <footer><a style="color:white;" ui-sref="login">Login</a></footer>
 </div>

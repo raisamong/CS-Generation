@@ -6,8 +6,7 @@
         </div>
         <div class="panel-body">
             <div class="imageProfile"
-                ng-style="{'background-image':'url('+(info.image ? info.image:'img/default_profile_img.png')+')'}"
-                ngf-select="uploadImage($file)" accept="image/*"  ngf-max-size="1MB">
+                ng-style="{'background-image':'url('+(info.image ? info.image:'img/default_profile_img.png')+')'}">
             </div>
             <form ng-submit="add(addForm)" name="addForm">
                 <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&
