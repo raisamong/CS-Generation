@@ -31,4 +31,5 @@
     <icon density="xxhdpi" src="www/img/icon.png" />
     <icon density="xxxhdpi" src="www/img/icon.png" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="Orientation" value="portrait" />
 </widget>

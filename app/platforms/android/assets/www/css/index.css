@@ -104,8 +104,8 @@ h1 {
 
 header {
     padding: 1em;
-    color: white;
-    background-color: #428bca;
+    color: black;
+    background-color: #FFD05B;
     clear: left;
     text-align: center;
 }
@@ -113,9 +113,9 @@ header {
 footer {
     position:absolute;
     height: 50px;
-    color: white;
+    color: black;
     width: 100%;
-    background-color: #428bca;
+    background-color: #FFD05B;
     text-align: center;
     bottom: 0px;
     padding-top: 15px;
