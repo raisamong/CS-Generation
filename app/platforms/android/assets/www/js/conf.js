@@ -1,3 +1,3 @@
 var main = {};
 main.type = 'debug';
-var backend = "http://192.168.1.40:8000/";
+var backend = "http://10.1.10.94:8000/";
