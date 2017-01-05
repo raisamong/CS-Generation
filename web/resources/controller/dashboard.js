@@ -3,7 +3,7 @@ angular.module('dashboardModule', [])
         function($scope, $state, userService, cookiesService) {
             var checkCurrentUser = function() {
                 $scope.user = userService.getUser();
-                if (!$scope.user.access) {
+                if (!$scope.user.access || $scope.user.role != 'admin') {
                     $state.go('login');
                     return false;
                 }

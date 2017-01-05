@@ -7,6 +7,13 @@ angular.module('datatableModule', [])
             $scope.pages = [];
             $scope.pageSelected = 1;
 
+            var user = userService.getUser();
+            if (user && user.role == 'admin') {
+                $scope.isAdmin = true;
+            } else {
+                $scope.isAdmin = false;
+            }
+
             var calPage = function(countRaw) {
                 $scope.pages = [];
                 var countPage = countRaw / 10;

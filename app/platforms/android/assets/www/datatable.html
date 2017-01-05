@@ -31,4 +31,4 @@
     </div>
 </div>
 <div ng-include="'templates/pager.html'"></div>
-<img class="itemAddIcon" ui-sref="dashboard.add" src="img/plus-icon.png" />
+<img ng-show="isAdmin" class="itemAddIcon" ui-sref="dashboard.add" src="img/plus-icon.png" />

@@ -1,8 +1,8 @@
 angular.module('addModule', [])
     .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr',
-        'uploadService',
+        'uploadService', 'userService',
         function($scope, $state, $stateParams, studentService, toastr,
-        uploadService ) {
+        uploadService, userService) {
             // TODO hacked
             $scope.info = $stateParams.info || {
                 code: '5621601785',
@@ -14,6 +14,13 @@ angular.module('addModule', [])
             };
             if ($stateParams.info) {
                 $scope.update = true;
+            }
+
+            var user = userService.getUser();
+            if (user && user.role == 'admin') {
+                $scope.isAdmin = true;
+            } else {
+                $scope.isAdmin = false;
             }
             var genCloseFriend = function() {
                 var information = '';
