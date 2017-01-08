@@ -19,7 +19,7 @@
         </div>
         <div class="panel-body" style="padding:0px; height:0px;" ng-show="hasInfo">
             <ul class="list-group">
-                <table-item delete-student="deleteStudent(item.id, $index)" update="update(item)"
+                <table-item is-admin="isAdmin" delete-student="deleteStudent(item.id, $index)" update="update(item)"
                 ng-repeat="item in itemsTable | filter : itemSearch | orderBy : 'id'" item="item">
 
                 </table-item>

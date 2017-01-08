@@ -10,7 +10,7 @@
           {{item.name}} {{item.surname}}
       </div>
   </div>
-  <div class="item-option" ng-click="deleteStudent()">
+  <div class="item-option" ng-click="deleteStudent()" ng-show="isAdmin">
       <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
   </div>
   <br class="clear:both;" />

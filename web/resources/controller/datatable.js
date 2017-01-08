@@ -28,12 +28,13 @@ angular.module('datatableModule', [])
                 }).then(function(studentList) {
                     $scope.itemsTable = [];
                     $scope.itemsTable = studentList.data;
-                    calPage(studentList.count);
+                    calPage(studentList.count || 0);
                     $scope.hasInfo = true;
                 }, function(err) {
                     if (err.result != 1) {
                         toastr.error(err.msg);
                     }
+                    $scope.pages = [];
                     $scope.hasInfo = false;
                 });
             };

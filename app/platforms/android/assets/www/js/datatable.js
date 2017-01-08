@@ -99,7 +99,8 @@ angular.module('datatableModule', [])
             scope: {
                 item: '=',
                 deleteStudent: '&',
-                update: '&'
+                update: '&',
+                isAdmin: '='
             }
         };
     })
