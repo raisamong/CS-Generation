@@ -102,6 +102,9 @@ angular.module('datatableModule', [])
                 deleteStudent: '&',
                 update: '&',
                 isAdmin: '='
+            },
+            controller: function ($scope) {
+                $scope.item.idShow = $scope.item.id.replace(/'/g, "");
             }
         };
     })
