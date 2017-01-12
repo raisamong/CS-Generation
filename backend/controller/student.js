@@ -122,12 +122,17 @@ global.router.route('/student/update')
                     tel: info.tel,
                     facebook: info.facebook,
                     address: info.address,
-                    cf: info.cf
+                    friend: info.cf
                 }, {
                     id: infoEscaper.code
                 }).then(function() {
                     res.json({
                         result: 0
+                    });
+                }, function () {
+                    res.json({
+                        result: 3,
+                        msg: 'Update student failed'
                     });
                 });
             } else if (checkExist.result == 1) {

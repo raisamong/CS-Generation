@@ -80,6 +80,18 @@ angular.module('datatableModule', [])
             $scope.update = function(item) {
                 hidden.log(item);
                 item.code = item.id.substring(1, item.id.length - 1);
+                if (item.friend) {
+                    var cf = item.friend.split(',');
+                    if (cf[0]) {
+                        item.cfname = cf[0];
+                    }
+                    if (cf[1]) {
+                        item.cfsurname = cf[1];
+                    }
+                    if (cf[2]) {
+                        item.cfaddress = cf[2];
+                    }
+                }
                 $state.go('dashboard.add', {
                     info: item
                 });
