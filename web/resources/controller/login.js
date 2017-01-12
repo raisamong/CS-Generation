@@ -54,9 +54,10 @@ angular.module('loginModule', [])
             // <!-- end variables defined -->
 
             // <!-- $scopes defined -->
-            $scope.info = {};
-            $scope.info.username = 'raisamong';
-            $scope.info.password = 'aaaaaaaa';
+            $scope.info = {
+                username: 'raisamong',
+                password: 'aaaaaaaa'
+            };
             // <!-- end $scopes defined -->
 
             // <!-- variables function defined -->

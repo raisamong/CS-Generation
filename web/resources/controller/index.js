@@ -31,7 +31,7 @@ angular.module('csGeneration', [
         });
         $urlRouterProvider.otherwise('/');
         $stateProvider.
-        state('login', {
+            state('login', {
                 url: '/login',
                 templateUrl: './resources/views/login.html',
                 controller: 'LoginCtrl'
