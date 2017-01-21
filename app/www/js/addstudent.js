@@ -12,6 +12,8 @@ angular.module('addModule', [])
                 facebook: 'testFacebook',
                 address: 'testAddress'
             };
+            $scope.loading = false;
+            
             if ($stateParams.info) {
                 $scope.update = true;
             }
@@ -80,6 +82,12 @@ angular.module('addModule', [])
                     }, function(err) {
                         addError(err);
                     });
+                }
+            };
+
+            $scope.back = function functionName() {
+                if (!$scope.loading) {
+                    $state.go('dashboard.datatable');
                 }
             };
 

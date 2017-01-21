@@ -12,6 +12,8 @@ angular.module('addModule', [])
                 facebook: 'testFacebook',
                 address: 'testAddress'
             };
+            $scope.loading = false;
+            
             if ($stateParams.info) {
                 $scope.update = true;
             }
@@ -45,7 +47,7 @@ angular.module('addModule', [])
                     facebook: $scope.info.facebook || '',
                     address: $scope.info.address || '',
                     year: $scope.info.code.substring(0, 2),
-                    image: $scope.info.image
+                    image: $scope.info.image || ''
                 };
                 information.cf = genCloseFriend();
                 return information;
@@ -59,10 +61,12 @@ angular.module('addModule', [])
                     $scope.info = {};
                 }
                 $scope.addForm.$setPristine();
+                $scope.loading = false;
             };
 
             var addError = function(message) {
                 toastr.error(message);
+                $scope.loading = false;
             };
 
             var set = function (info) {
@@ -81,9 +85,16 @@ angular.module('addModule', [])
                 }
             };
 
+            $scope.back = function functionName() {
+                if (!$scope.loading) {
+                    $state.go('dashboard.datatable');
+                }
+            };
+
             $scope.add = function() {
                 var info = genStudentData();
                 console.log(info);
+                $scope.loading = true;
                 if (upload) {
                     uploadService($scope.info.image).then(function (url) {
                         hidden.log('uploaded', url);

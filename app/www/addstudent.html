@@ -1,6 +1,6 @@
 <div class="container" style="padding:0px">
     <div class="panel panel-default">
-        <div class="panel-heading" ui-sref="dashboard.datatable">
+        <div class="panel-heading" ng-click="back()">
             <h4 ng-show="!update && isAdmin">< Add Student</h4>
             <h4 ng-show="update && isAdmin">< Update Student</h4>
             <h4 ng-show="!isAdmin">< View Student</h4>
@@ -45,7 +45,7 @@
                     <input ng-disabled="!isAdmin" ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
                     <input ng-disabled="!isAdmin" ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Address..">
                 </div>
-                <button type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
+                <button ng-disabled="loading" type="button" ng-click="back()" class="btn btn-default">Back</button>
                 <button ng-show="isAdmin && !update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
                 <button ng-show="isAdmin && update" ng-disabled="loading" type="submit" class="btn btn-success" style="float:right;">Update</button>
                 <button ng-show="isAdmin" ng-disabled="loading" type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
