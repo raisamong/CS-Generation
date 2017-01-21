@@ -122,7 +122,8 @@ global.router.route('/student/update')
                     tel: info.tel,
                     facebook: info.facebook,
                     address: info.address,
-                    friend: info.cf
+                    friend: info.cf,
+                    image: info.image || ''
                 }, {
                     id: infoEscaper.code
                 }).then(function() {

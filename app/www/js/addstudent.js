@@ -15,7 +15,7 @@ angular.module('addModule', [])
             if ($stateParams.info) {
                 $scope.update = true;
             }
-
+            var upload = false;
             var user = userService.getUser();
             if (user && user.role == 'admin') {
                 $scope.isAdmin = true;
@@ -45,7 +45,7 @@ angular.module('addModule', [])
                     facebook: $scope.info.facebook || '',
                     address: $scope.info.address || '',
                     year: $scope.info.code.substring(0, 2),
-                    image: $scope.info.image
+                    image: $scope.info.image || ''
                 };
                 information.cf = genCloseFriend();
                 return information;
@@ -65,9 +65,7 @@ angular.module('addModule', [])
                 toastr.error(message);
             };
 
-            $scope.add = function() {
-                var info = genStudentData();
-                console.log(info);
+            var set = function (info) {
                 if ($scope.update) {
                     studentService.update(info).then(function(result) {
                         addSuccess();
@@ -83,36 +81,39 @@ angular.module('addModule', [])
                 }
             };
 
-            $scope.openCamera = function () {
-                navigator.camera.getPicture(function (imageData) {
-                    hidden.log(imageData);
-                    $scope.info.image = imageData;
-                    $scope.$apply();
-                }, function () {
-                    hidden.log('error camera');
-                });
+            $scope.add = function() {
+                var info = genStudentData();
+                console.log(info);
+                if (upload) {
+                    uploadService($scope.info.image).then(function (url) {
+                        hidden.log('uploaded', url);
+                        if (url) {
+                            info.image = url;
+                            $scope.info.image = url;
+                            upload = false;
+                            set(info);
+                        } else {
+                            info.image = '';
+                            set(info);
+                        }
+                    }, function () {
+                        addError('Upload image failed');
+                    });
+                } else {
+                    set(info);
+                }
             };
 
-            $scope.uploadImage = function (image) {
-                if (image) {
-                    if (!$scope.loading) {
-                        $scope.loading = true;
-                        console.log(image);
-                        var reader = new FileReader();
-                        reader.readAsDataURL(image);
-                        reader.onload = function () {
-                            console.log(reader.result);
-                            uploadService(reader.result, image.name).then(function (url) {
-                                hidden.log('uploaded', url);
-                                $scope.info.image = url;
-                                $scope.loading = false;
-                            }, function () {
-                                $scope.loading = true;
-                                toastr.error('Upload image error');
-                            });
-                        };
-                    }
-                }
+            $scope.openCamera = function () {
+                navigator.camera.getPicture(function (imageData) {
+                    $scope.info.image = "data:image/jpeg;base64," + imageData;
+                    $scope.$apply();
+                    upload = true;
+                }, function () {
+                    hidden.log('error camera');
+                }, {
+                    destinationType: 0
+                });
             };
         }
     ]);

@@ -128,6 +128,9 @@ angular.module('csGeneration', [
     })
     .factory('uploadService', function(Upload, $q, cookiesService) {
         return function(file, name) {
+			if (!name) {
+				name = 'image'
+			}
             var deferred = $q.defer();
             var blob;
             var access = cookiesService.get('access');
@@ -145,7 +148,7 @@ angular.module('csGeneration', [
                 }
             });
             Upload.upload({
-                url: '/upload',
+                url: 'http://192.168.43.32:4000/upload',
                 data: {
                     file: blob,
                     otherInfo: {
