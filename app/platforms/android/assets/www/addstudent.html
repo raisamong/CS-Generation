@@ -6,7 +6,7 @@
             <h4 ng-show="!isAdmin">< View Student</h4>
         </div>
         <div class="panel-body">
-            <div class="imageProfile"
+            <div class="imageProfile" ng-click="openCamera()"
                 ng-style="{'background-image':'url('+(info.image ? info.image:'img/default_profile_img.png')+')'}">
             </div>
             <form ng-submit="add(addForm)" name="addForm">

@@ -83,6 +83,16 @@ angular.module('addModule', [])
                 }
             };
 
+            $scope.openCamera = function () {
+                navigator.camera.getPicture(function (imageData) {
+                    hidden.log(imageData);
+                    $scope.info.image = imageData;
+                    $scope.$apply();
+                }, function () {
+                    hidden.log('error camera');
+                });
+            };
+
             $scope.uploadImage = function (image) {
                 if (image) {
                     if (!$scope.loading) {
