@@ -131,7 +131,7 @@ angular.module('csGeneration', [
                 }
             });
             Upload.upload({
-                url: '/upload',
+                url: backend + 'upload',
                 data: {
                     file: blob,
                     otherInfo: {

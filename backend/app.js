@@ -1,16 +1,26 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 var router = express.Router();
 var _ = require('lodash');
 var mysql = require('mysql');
 var db = require('./db');
+var multer = require('multer');
 var bodyParser = require('body-parser');
 var route = require('./api/route.js');
 var middleware = require('./middleware/middleware');
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'ddh0udtsk',
+  api_key: '229892396977635',
+  api_secret: 'd5Lf3el5eXtGbfGjGatMgYohsqs'
+});
 
 global._ = _;
 global.router = router;
 
+app.use(multer({dest:__dirname+'/file/uploads/'}).any());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({
     extended: true
@@ -60,5 +70,16 @@ setupRoute();
 global.connection = setupMysql();
 global.mysql = mysql;
 
+app.post('/upload',function(req,res){
+    var file = req.files[0];
+    var info = req.body.otherInfo;
+    cloudinary.uploader.upload(file.path, function(url) {
+        fs.unlink(file.path);
+        res.json({
+            result: 0,
+            data: url
+        });
+    });
+});
 
 module.exports = app;

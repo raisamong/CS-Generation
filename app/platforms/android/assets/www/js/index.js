@@ -148,7 +148,7 @@ angular.module('csGeneration', [
                 }
             });
             Upload.upload({
-                url: 'http://192.168.43.32:4000/upload',
+                url: backend + 'upload',
                 data: {
                     file: blob,
                     otherInfo: {

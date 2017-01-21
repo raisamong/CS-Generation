@@ -12,9 +12,14 @@ angular.module('addModule', [])
                 facebook: 'testFacebook',
                 address: 'testAddress'
             };
+
+            $scope.loading = false;
+
             if ($stateParams.info) {
                 $scope.update = true;
             }
+
+            var upload = false;
             var genCloseFriend = function() {
                 var information = '';
                 if ($scope.info.cfname) {
@@ -52,15 +57,15 @@ angular.module('addModule', [])
                     $scope.info = {};
                 }
                 $scope.addForm.$setPristine();
+                $scope.loading = false;
             };
 
             var addError = function(message) {
                 toastr.error(message);
+                $scope.loading = false;
             };
 
-            $scope.add = function() {
-                var info = genStudentData();
-                console.log(info);
+            var set = function (info) {
                 if ($scope.update) {
                     studentService.update(info).then(function(result) {
                         addSuccess();
@@ -76,23 +81,42 @@ angular.module('addModule', [])
                 }
             };
 
+            $scope.add = function() {
+                var info = genStudentData();
+                hidden.log(info);
+                $scope.loading = true;
+                if (upload) {
+                    uploadService($scope.info.image).then(function (url) {
+                        hidden.log('uploaded', url);
+                        if (url) {
+                            info.image = url;
+                            $scope.info.image = url;
+                            upload = false;
+                            set(info);
+                        } else {
+                            info.image = '';
+                            set(info);
+                        }
+                    }, function () {
+                        addError('Upload image failed');
+                    });
+                } else {
+                    set(info);
+                }
+            };
+
+
             $scope.uploadImage = function (image) {
                 if (image) {
                     if (!$scope.loading) {
                         $scope.loading = true;
-                        console.log(image);
+                        hidden.log(image);
                         var reader = new FileReader();
                         reader.readAsDataURL(image);
                         reader.onload = function () {
-                            console.log(reader.result);
-                            uploadService(reader.result, image.name).then(function (url) {
-                                hidden.log('uploaded', url);
-                                $scope.info.image = url;
-                                $scope.loading = false;
-                            }, function () {
-                                $scope.loading = true;
-                                toastr.error('Upload image error');
-                            });
+                            $scope.info.image = reader.result;
+                            upload = true;
+                            $scope.loading = false;
                         };
                     }
                 }
