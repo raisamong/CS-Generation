@@ -45,10 +45,10 @@
                     <input ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
                     <input ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Address..">
                 </div>
-                <button type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
+                <button ng-disabled="loading" type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
                 <button ng-disabled="loading" ng-show="!update" type="submit" class="btn btn-primary" style="float:right;">Submit</button>
                 <button ng-disabled="loading" ng-show="update" type="submit" class="btn btn-success" style="float:right;">Update</button>
-                <button type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
+                <button type="reset" ng-disabled="loading" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
             </form>
         </div>
     </div>

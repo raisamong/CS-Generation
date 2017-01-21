@@ -48,7 +48,7 @@
                 <button type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
                 <button ng-show="isAdmin && !update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
                 <button ng-show="isAdmin && update" ng-disabled="loading" type="submit" class="btn btn-success" style="float:right;">Update</button>
-                <button ng-show="isAdmin" type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
+                <button ng-show="isAdmin" ng-disabled="loading" type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
             </form>
         </div>
     </div>

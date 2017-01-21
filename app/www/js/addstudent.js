@@ -59,10 +59,12 @@ angular.module('addModule', [])
                     $scope.info = {};
                 }
                 $scope.addForm.$setPristine();
+                $scope.loading = false;
             };
 
             var addError = function(message) {
                 toastr.error(message);
+                $scope.loading = false;
             };
 
             var set = function (info) {
@@ -84,6 +86,7 @@ angular.module('addModule', [])
             $scope.add = function() {
                 var info = genStudentData();
                 console.log(info);
+                $scope.loading = true;
                 if (upload) {
                     uploadService($scope.info.image).then(function (url) {
                         hidden.log('uploaded', url);
