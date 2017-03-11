@@ -35,7 +35,7 @@
                     <input ng-disabled="!isAdmin" placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
                 </div>
                 <div class="form-group">
-                    <label for="address">Address:</label>
+                    <label for="address">Tel:</label>
                     <textarea ng-disabled="!isAdmin" placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
                     </textarea>
                 </div>
@@ -43,7 +43,7 @@
                     <label for="cf">Close Friend:</label>
                     <input ng-disabled="!isAdmin" ng-model="info.cfname" type="text" class="form-control" name="cfname" placeholder="Firstname..">
                     <input ng-disabled="!isAdmin" ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
-                    <input ng-disabled="!isAdmin" ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Address..">
+                    <input ng-disabled="!isAdmin" ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Tel..">
                 </div>
                 <button ng-disabled="loading" type="button" ng-click="back()" class="btn btn-default">Back</button>
                 <button ng-show="isAdmin && !update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
