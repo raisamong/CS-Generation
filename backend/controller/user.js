@@ -64,46 +64,45 @@ global.router.route('/login')
 global.router.route('/register')
     .post(function(req, res) {
         var role = req.body.role || 'user';
-        if (role == 'admin') {
-            if (req.body.code != 'pipenew') {
-                res.json({
-                    result: 5,
-                    msg: 'wrong code'
-                });
-                return;
-            }
-        }
-        var info = libAuth.escape(req.body);
-        libUtil.select('*', 'users', ['username'], [info.username]).then(function(checkExist) {
-            if (checkExist.result == 1) {
-                libUtil.insert('profiles', [null, req.body.username, '', '', '']).then(function(pid) {
-                    libUtil.insert('users', [null, info.username, info.password, info.access, pid, role, null]).then(function() {
-                        res.json({
-                            result: 0,
+        libUtil.checkRegisterCode(req.body.code, role).then(function () {
+            var info = libAuth.escape(req.body);
+            libUtil.select('*', 'users', ['username'], [info.username]).then(function(checkExist) {
+                if (checkExist.result == 1) {
+                    libUtil.insert('profiles', [null, req.body.username, '', '', '']).then(function(pid) {
+                        libUtil.insert('users', [null, info.username, info.password, info.access, pid, role, null]).then(function() {
+                            res.json({
+                                result: 0,
+                            });
+                        }, function() {
+                            res.json({
+                                result: 3,
+                                msg: 'insert users failed'
+                            });
                         });
                     }, function() {
                         res.json({
-                            result: 3,
-                            msg: 'insert users failed'
+                            result: 2,
+                            msg: 'insert profile failed'
                         });
                     });
-                }, function() {
+                } else {
                     res.json({
-                        result: 2,
-                        msg: 'insert profile failed'
+                        result: 1,
+                        msg: 'check username failed' + checkExist
                     });
-                });
-            } else {
+                }
+            }, function() {
                 res.json({
-                    result: 1,
-                    msg: 'check username failed' + checkExist
+                    result: 4,
+                    msg: 'database error' + checkExist
                 });
-            }
-        }, function() {
-            res.json({
-                result: 4,
-                msg: 'database error' + checkExist
             });
+        }, function () {
+            res.json({
+                result: 5,
+                msg: 'wrong code'
+            });
+            return;
         });
     });
 

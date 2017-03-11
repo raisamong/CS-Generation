@@ -1,6 +1,8 @@
 var _ = require('lodash');
 var promise = require('bluebird');
 
+
+
 var select = function(selected, table, where, conditions, limit) {
     return new promise.Promise(function(resolve, reject) {
         var sql = 'SELECT ';
@@ -168,10 +170,30 @@ var update = function (table, info, where) {
         });
     });
 };
+
+var checkRegisterCode = function (code, role) {
+    return new promise.Promise(function (resolve, reject) {
+        if (role == 'admin') {
+            select(['passcode'], 'code' , 'name', 'register').then(function (OriginCode) {
+                console.log('OriginCode', OriginCode.data[0].passcode);
+                if (code == OriginCode.data[0].passcode) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+        } else {
+            resolve();
+        }
+    });
+};
+
+
 module.exports = {
     select: select,
     insert: insert,
     dataDelete: dataDelete,
     count: count,
-    update: update
+    update: update,
+    checkRegisterCode: checkRegisterCode
 };
