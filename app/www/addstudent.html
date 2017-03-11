@@ -6,8 +6,11 @@
             <h4 ng-show="!isAdmin">< View Student</h4>
         </div>
         <div class="panel-body">
-            <div class="imageProfile" ng-click="openCamera()"
+            <div class="imageProfile" ng-show="!loading" ng-click="openCamera()"
                 ng-style="{'background-image':'url('+(info.image ? info.image:'img/default_profile_img.png')+')'}">
+            </div>
+            <div class="imageProfile" ng-show="loading"
+                ng-style="{'background-image':'url('+('img/loading.gif')+')'}">
             </div>
             <form ng-submit="add(addForm)" name="addForm">
                 <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&
