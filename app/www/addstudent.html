@@ -1,9 +1,12 @@
 <div class="container" style="padding:0px">
     <div class="panel panel-default">
-        <div class="panel-heading" ng-click="back()">
-            <h4 ng-show="!update && isAdmin">< Add Student</h4>
-            <h4 ng-show="update && isAdmin">< Update Student</h4>
-            <h4 ng-show="!isAdmin">< View Student</h4>
+        <div class="panel-heading clearfix" ng-click="back()">
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;" ng-show="!update && isAdmin">< Add Student</h4>
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;" ng-show="update && isAdmin">< Update Student</h4>
+            <h4 class="panel-title pull-left" style="padding-top: 7.5px;" ng-show="!isAdmin">< View Student</h4>
+            <div class="btn-group pull-right">
+                <a href="#" class="btn btn-default btn-sm"><i class="fa fa-refresh" style=""></i></a>
+            </div>
         </div>
         <div class="panel-body">
             <div class="imageProfile" ng-show="!loading" ng-click="openCamera()"
