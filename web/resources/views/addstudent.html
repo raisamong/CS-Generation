@@ -5,9 +5,12 @@
             <h4 ng-show="update">Update Student</h4>
         </div>
         <div class="panel-body">
-            <div class="imageProfile"
+            <div class="imageProfile" ng-show="!loading"
                 ng-style="{'background-image':'url('+(info.image ? info.image:'./resources/img/default_profile_img.png')+')'}"
-                ngf-select="uploadImage($file)" accept="image/*"  ngf-max-size="1MB">
+                ngf-select="uploadImage($file)" accept="image/*" >
+            </div>
+            <div class="imageProfile" ng-show="loading"
+                ng-style="{'background-image':'url('+('./resources/img/loading.gif')+')'}">
             </div>
             <form ng-submit="add(addForm)" name="addForm">
                 <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&

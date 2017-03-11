@@ -119,6 +119,8 @@ angular.module('addModule', [])
                             $scope.loading = false;
                         };
                     }
+                } else {
+                    hidden.log(image);
                 }
             };
         }
