@@ -22,6 +22,23 @@ global.router.route('/setting/register')
                 msg: 'Connection Lost'
             });
         });
+    })
+    .put(function(req, res) {
+        var code = req.body.passcode;
+        libUtil.update('code', {
+            passcode: code
+        }, {
+            name: 'register'
+        }).then(function() {
+            res.json({
+                result: 0
+            });
+        }, function () {
+            res.json({
+                result: 3,
+                msg: 'Update register code failed'
+            });
+        });
     });
 
 module.exports = router;
