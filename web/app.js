@@ -3,8 +3,6 @@ var app = express();
 var fs = require('fs');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var request = require('request');
-
 
 app.use(multer({dest:__dirname+'/file/uploads/'}).any());
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
