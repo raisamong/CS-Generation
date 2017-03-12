@@ -3,7 +3,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="btn-group pull-right">
-                <input type="text" placeholder="Search..." class="form-control" ng-model="itemSearch"></input>
+                <input type="text" placeholder="Search..." ng-model="searchText" class="form-control" ng-change="search()"></input>
             </div>
             <div class="btn-group pull-right" style="margin-right:10px;">
                 <div class="dropdown">
@@ -21,7 +21,7 @@
         <div class="panel-body" style="padding:0px; height:0px;" ng-show="hasInfo">
             <ul class="list-group">
                 <table-item delete-student="deleteStudent(item.id, $index)" update="update(item)"
-                ng-repeat="item in itemsTable | filter : itemSearch | orderBy : 'id'" item="item">
+                ng-repeat="item in itemsTable | orderBy : 'id'" item="item">
 
                 </table-item>
             </ul>

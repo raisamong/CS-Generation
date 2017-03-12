@@ -7,6 +7,8 @@ angular.module('datatableModule', [])
             $scope.pages = [];
             $scope.pageSelected = 1;
 
+            var searchMode = false;
+
             var calPage = function(countRaw) {
                 $scope.pages = [];
                 var countPage = countRaw / 10;
@@ -62,7 +64,11 @@ angular.module('datatableModule', [])
                     limit.push((page - 1) * 10);
                     limit.push((page * 10) - 1);
                     hidden.log(limit);
-                    init(limit);
+                    if (searchMode) {
+                        $scope.search(limit);
+                    } else {
+                        init(limit);
+                    }
                 }
             };
 
@@ -95,6 +101,30 @@ angular.module('datatableModule', [])
                 $state.go('dashboard.add', {
                     info: item
                 });
+            };
+
+            $scope.search = function (limit) {
+                if ($scope.searchText) {
+                    searchMode = true;
+                    studentService.search({
+                        search: $scope.searchText,
+                        limit:  limit || 10
+                    }).then(function(studentList) {
+                        $scope.itemsTable = [];
+                        $scope.itemsTable = studentList.data;
+                        calPage(studentList.count || 0);
+                        $scope.hasInfo = true;
+                    }, function(err) {
+                        if (err.result != 1) {
+                            toastr.error(err.msg);
+                        }
+                        $scope.pages = [];
+                        $scope.hasInfo = false;
+                    });
+                } else {
+                    searchMode = false;
+                    init();
+                }
             };
         }
     ])
@@ -213,6 +243,34 @@ angular.module('datatableModule', [])
                     })
                     .error(function(data, status, headers, config) {
                         deferred.reject("Delete student failed");
+                    });
+                return deferred.promise;
+            },
+            search: function(info) {
+                var deferred = $q.defer();
+                var access = cookiesService.get('access');
+                $http({
+                        method: 'POST',
+                        url: backend + 'student/search',
+                        headers: {
+                            "Content-type": "application/json;charset=UTF-8",
+                            "X-CS-Access": access
+                        },
+                        data: info
+                    })
+                    .success(function(data, status, headers, config) {
+                        hidden.log('[search-Student]', data);
+                        if (data.result === 0) {
+                            deferred.resolve(data);
+                        } else {
+                            deferred.reject(data);
+                        }
+                    })
+                    .error(function(data, status, headers, config) {
+                        deferred.reject({
+                            result: 1,
+                            msg: "Get Information failed"
+                        });
                     });
                 return deferred.promise;
             }

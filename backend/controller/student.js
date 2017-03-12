@@ -191,7 +191,7 @@ global.router.route('/student/update')
         .post(function(req, res) {
           var search = req.body.search;
           var infoEscaper = libAuth.escape(req.body);
-          libUtil.search('*', 'students', ['id', 'name', 'surname'], req.body.search, 10).then(function(infoList) {
+          libUtil.search('*', 'students', ['id', 'name', 'surname'], req.body.search, req.body.limit).then(function(infoList) {
                   if (infoList.result === 0) {
                       libUtil.countSearch('students', {
                           key: ['id', 'name', 'surname'],
