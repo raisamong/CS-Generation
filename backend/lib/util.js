@@ -188,6 +188,95 @@ var checkRegisterCode = function (code, role) {
     });
 };
 
+var search = function(selected, table, where, conditions, limit) {
+    return new promise.Promise(function(resolve, reject) {
+        var sql = 'SELECT ';
+        var inserts = [table];
+
+        if (!table) {
+            reject();
+            return;
+        }
+
+        if (!selected) {
+            selected = "*";
+        }
+
+        if (selected == '*') {
+            sql += '* FROM ' + '??';
+        } else {
+            _.forEach(selected, function(field, key) {
+                sql += field + ',';
+            });
+            sql = sql.substring(0, sql.length - 1);
+            sql += ' FROM ' + '??';
+        }
+
+        if (where && conditions) {
+            sql += ' WHERE (';
+            _.forEach(where, function(field, key) {
+                sql += '?? LIKE ? OR ';
+                inserts.push(field, "%"+ conditions +"%");
+            });
+            sql = sql.substring(0, sql.length - 3) + ')';
+        }
+
+        if (limit) {
+            if (Array.isArray(limit)) {
+                sql += 'LIMIT ' + limit[0] + ',' + limit[1];
+            } else {
+                sql += 'LIMIT ' + limit;
+            }
+        }
+
+        sql = global.mysql.format(sql, inserts);
+        console.log(sql);
+        global.connection.query(sql, function(err, rows, fields) {
+            if (!err) {
+                if (rows && rows.length) {
+                    resolve({
+                        result: 0,
+                        data: rows
+                    });
+                } else {
+                    resolve({
+                        result: 1,
+                        msg: 'data not exist'
+                    });
+                }
+            } else {
+                console.log(err);
+                reject();
+            }
+        });
+    });
+};
+
+var countSearch = function(table, condition) {
+    return new promise.Promise(function(resolve, reject) {
+        var sql = 'SELECT COUNT(*) FROM ' + table;
+        var insert = [];
+        if (condition) {
+          sql += ' WHERE (';
+          _.forEach(condition.key, function(field, key) {
+              sql += '?? LIKE ? OR ';
+              insert.push(field, "%"+ condition.value +"%");
+          });
+          sql = sql.substring(0, sql.length - 3) + ')';
+        }
+        sql = global.mysql.format(sql, insert);
+        console.log('count search', sql);
+        global.connection.query(sql, function(err, rows) {
+            if (!err) {
+                resolve((rows[0]['COUNT(*)']));
+            } else {
+                console.log(err);
+                resolve(0);
+            }
+        });
+    });
+};
+
 
 module.exports = {
     select: select,
@@ -195,5 +284,7 @@ module.exports = {
     dataDelete: dataDelete,
     count: count,
     update: update,
-    checkRegisterCode: checkRegisterCode
+    checkRegisterCode: checkRegisterCode,
+    search: search,
+    countSearch: countSearch
 };

@@ -187,6 +187,42 @@ global.router.route('/student/update')
         });
     });
 
+    global.router.route('/student/search')
+        .post(function(req, res) {
+          var search = req.body.search;
+          var infoEscaper = libAuth.escape(req.body);
+          libUtil.search('*', 'students', ['id', 'name', 'surname'], req.body.search, 10).then(function(infoList) {
+                  if (infoList.result === 0) {
+                      libUtil.countSearch('students', {
+                          key: ['id', 'name', 'surname'],
+                          value: req.body.search
+                      }).then(function(count) {
+                          res.json({
+                              result: 0,
+                              data: infoList.data,
+                              count: count
+                          });
+                      });
+                  } else if (infoList.result == 1) {
+                      res.json({
+                          result: 1,
+                          msg: 'No information'
+                      });
+                  } else {
+                      res.json({
+                          result: 2,
+                          msg: 'Get Information failed'
+                      });
+                  }
+              },
+              function() {
+                  res.json({
+                      result: 2,
+                      msg: 'Connection Lost'
+                  });
+              });
+        });
+
 
 
 module.exports = router;
