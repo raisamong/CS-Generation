@@ -38,7 +38,7 @@
                     <input placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
                 </div>
                 <div class="form-group">
-                    <label for="address">Tel:</label>
+                    <label for="address">Address:</label>
                     <textarea placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
                     </textarea>
                 </div>
@@ -51,7 +51,7 @@
                 <button ng-disabled="loading" type="button" ui-sref="dashboard.datatable" class="btn btn-default">Back</button>
                 <button ng-disabled="loading" ng-show="!update" type="submit" class="btn btn-primary" style="float:right;">Submit</button>
                 <button ng-disabled="loading" ng-show="update" type="submit" class="btn btn-success" style="float:right;">Update</button>
-                <button ng-disabled="loading" type="reset"  class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
+                <button ng-disabled="loading" ng-show="!update" type="reset"  class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
             </form>
         </div>
     </div>

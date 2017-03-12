@@ -1,7 +1,7 @@
 angular.module('addModule', [])
-    .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr',
+    .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr', '$http',
         'uploadService', 'userService',
-        function($scope, $state, $stateParams, studentService, toastr,
+        function($scope, $state, $stateParams, studentService, toastr, $http,
         uploadService, userService) {
             // TODO hacked
             $scope.info = $stateParams.info || {
@@ -12,8 +12,53 @@ angular.module('addModule', [])
                 facebook: 'testFacebook',
                 address: 'testAddress'
             };
+
+            $scope.refresh = function () {
+                  var access = window.localStorage.getItem('access');
+                  $http({
+                          method: 'post',
+                          url: backend + 'student/get',
+                          headers: {
+                              "Content-type": "application/json;charset=UTF-8",
+                              "X-CS-Access": access
+                          },
+                          data: {
+                              id: $scope.info.code
+                          }
+                      })
+                      .success(function(data, status, headers, config) {
+                          hidden.log('[get-Student]', data);
+                          if (data.result === 0) {
+                              $scope.info.address = data.data.address;
+                              $scope.info.facebook = data.data.facebook;
+                              $scope.info.image = data.data.image;
+                              $scope.info.name = data.data.name;
+                              $scope.info.surname = data.data.surname;
+                              $scope.info.tel = data.data.tel;
+                              if (data.data.friend) {
+                                    var cf = data.data.friend.split(',');
+                                    if (cf[0]) {
+                                        $scope.info.cfname = cf[0];
+                                    }
+                                    if (cf[1]) {
+                                        $scope.info.cfsurname = cf[1];
+                                    }
+                                    if (cf[2]) {
+                                        $scope.info.cfaddress = cf[2];
+                                    }
+                              }
+                              toastr.success('Refreshed');
+                          } else {
+                              toastr.error('Refresh failed');
+                          }
+                      })
+                      .error(function(data, status, headers, config) {
+                          toastr.error('Connection Lost');
+                      });
+            };
+
             $scope.loading = false;
-            
+
             if ($stateParams.info) {
                 $scope.update = true;
             }

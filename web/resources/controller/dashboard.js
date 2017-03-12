@@ -68,7 +68,6 @@ angular.module('dashboardModule', [])
                 });
 
                 modalInstance.result.then(function (isSuccess) {
-                    hidden.log('ssss', isSuccess);
                     if (isSuccess) {
                         toastr.success('Update register code succeed');
                     } else {

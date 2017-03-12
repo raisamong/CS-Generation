@@ -21,11 +21,9 @@ angular.module('registerModule', [])
                 }, function(err) {
                     hidden.log('[Register] register failed', err);
                     if (err.result == 1) {
-                        toastr.warning('Please check your register code.');
+                        toastr.warning('Username exists.');
                     } else if (err.result == 4) {
                         toastr.warning('Connection Lost');
-                    } else if (err.result == 5) {
-                        toastr.warning('Wrong Register Code');
                     } else {
                         toastr.error("Register Failed");
                     }

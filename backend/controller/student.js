@@ -78,6 +78,37 @@ global.router.route('/student/list')
             });
     });
 
+    global.router.route('/student/get')
+    .post(function(req, res) {
+        //setup search user
+        var info = libAuth.escape(req.body);
+        libUtil.select('*', 'students', ['id'], [info.id]).then(function(studentInfo) {
+                console.log('get student', studentInfo);
+                if (studentInfo.result === 0) {
+                    res.json({
+                        result:0,
+                        data: studentInfo.data[0]
+                    });
+                } else if (studentInfo.result == 1) {
+                    res.json({
+                        result: 1,
+                        msg: 'No information'
+                    });
+                } else {
+                    res.json({
+                        result: 2,
+                        msg: 'Get Information failed'
+                    });
+                }
+            },
+            function() {
+                res.json({
+                    result: 2,
+                    msg: 'Connection Lost'
+                });
+            });
+    });
+
 global.router.route('/student/delete/:id')
     .delete(function(req, res) {
         var studentId = req.params.id;
