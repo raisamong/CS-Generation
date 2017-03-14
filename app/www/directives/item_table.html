@@ -1,17 +1,20 @@
 <li class="list-group-item" style="height:100px;">
-  <div class="item-div-image" ng-click="update()">
-      <img class="item-image" ng-src="{{item.image || 'img/default_profile_img.png'}}">
-  </div>
-  <div class="item-div-info" ng-click="update()">
-      <div>
-          {{item.idShow}}
-      </div>
-      <div class="item-info-name">
-          {{item.name}} {{item.surname}}
-      </div>
-  </div>
-  <div class="item-option" ng-click="deleteStudent()" ng-show="isAdmin">
-      <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
-  </div>
-  <br class="clear:both;" />
+    <div class="item-no">
+        <h4>{{index +((page-1)*10)+1}}.</h4>
+    </div>
+    <div class="item-div-image" ng-click="update()">
+        <img class="item-image" ng-src="{{item.image || 'img/default_profile_img.png'}}">
+    </div>
+    <div class="item-div-info" ng-click="update()">
+        <div>
+            {{item.idShow}}
+        </div>
+        <div class="item-info-name">
+            {{item.name}} {{item.surname}}
+        </div>
+    </div>
+    <div class="item-option" ng-click="deleteStudent()" ng-show="isAdmin">
+        <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+    </div>
+    <br class="clear:both;" />
 </li>
