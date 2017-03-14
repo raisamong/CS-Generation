@@ -1,3 +1,12 @@
+.itemNo {
+    width: 100px;
+    float:left;
+    margin-top: 30px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
 .itemTable {
     height: 150px;
     border: 1px solid #bce8f1;
@@ -12,7 +21,7 @@
 }
 .ItemInfo {
     /*border: 1px solid;*/
-    width: calc(100% - 270px);
+    width: calc(100% - 310px);
     height: 130px;
     float:left;
     margin-top: 10px;
@@ -21,7 +30,7 @@
 }
 .itemOption {
     /*border: 1px solid;*/
-    width: 120px;
+    width: 60px;
     height: 130px;
     float:left;
     cursor: pointer;

@@ -135,7 +135,9 @@ angular.module('datatableModule', [])
             scope: {
                 item: '=',
                 deleteStudent: '&',
-                update: '&'
+                update: '&',
+                index: '=',
+                page: '='
             },
             controller: function ($scope) {
                 $scope.item.idShow = $scope.item.id.replace(/'/g, "");
