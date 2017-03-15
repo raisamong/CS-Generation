@@ -1,7 +1,7 @@
 angular.module('addModule', [])
-    .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr',
+    .controller('AddCtrl', ['$scope', '$state', '$stateParams', 'studentService', 'toastr', '$q',
         'uploadService',
-        function($scope, $state, $stateParams, studentService, toastr,
+        function($scope, $state, $stateParams, studentService, toastr, $q,
         uploadService ) {
             // TODO hacked
             $scope.info = $stateParams.info || {
@@ -105,22 +105,29 @@ angular.module('addModule', [])
                 }
             };
 
+            var loadImage = function (image) {
+                var deferred = $q.defer();
+                var reader = new FileReader();
+                reader.readAsDataURL(image);
+                reader.onload = function () {
+                    deferred.resolve(reader.result);
+                };
+                return deferred.promise;
+            }
+
 
             $scope.uploadImage = function (image) {
                 if (image) {
                     if (!$scope.loading) {
-                        $scope.loading = true;
-                        hidden.log(image);
-                        var reader = new FileReader();
-                        reader.readAsDataURL(image);
-                        reader.onload = function () {
-                            $scope.info.image = reader.result;
+                        loadImage(image).then(function (dataImage) {
+                            console.log('loaded');
+                            $scope.info.image = dataImage;
                             upload = true;
                             $scope.loading = false;
-                        };
+                        });
                     }
                 } else {
-                    hidden.log(image);
+                    hidden.log('no image');
                 }
             };
         }
