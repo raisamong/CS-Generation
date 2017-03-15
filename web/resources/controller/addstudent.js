@@ -5,12 +5,12 @@ angular.module('addModule', [])
         uploadService ) {
             // TODO hacked
             $scope.info = $stateParams.info || {
-                code: '5621601785',
-                name: 'jirapat',
-                surname: 'thanapingpong',
-                tel: '0823252881',
-                facebook: 'testFacebook',
-                address: 'testAddress'
+                code: '',
+                name: '',
+                surname: '',
+                tel: '',
+                facebook: '',
+                address: ''
             };
 
             $scope.loading = false;

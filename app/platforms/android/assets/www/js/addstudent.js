@@ -5,12 +5,12 @@ angular.module('addModule', [])
         uploadService, userService) {
             // TODO hacked
             $scope.info = $stateParams.info || {
-                code: '5621601785',
-                name: 'jirapat',
-                surname: 'thanapingpong',
-                tel: '0823252881',
-                facebook: 'testFacebook',
-                address: 'testAddress'
+                code: '',
+                name: '',
+                surname: '',
+                tel: '',
+                facebook: '',
+                address: ''
             };
 
             $scope.refresh = function () {
@@ -161,15 +161,17 @@ angular.module('addModule', [])
             };
 
             $scope.openCamera = function () {
-                navigator.camera.getPicture(function (imageData) {
+                if ($scope.isAdmin) {
+                  navigator.camera.getPicture(function (imageData) {
                     $scope.info.image = "data:image/jpeg;base64," + imageData;
                     $scope.$apply();
                     upload = true;
-                }, function () {
+                  }, function () {
                     hidden.log('error camera');
-                }, {
+                  }, {
                     destinationType: 0
-                });
+                  });
+                }
             };
         }
     ]);
