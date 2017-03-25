@@ -67,7 +67,10 @@ angular.module('addModule', [])
             if (user && user.role == 'admin') {
                 $scope.isAdmin = true;
             } else {
-                $scope.isAdmin = false;
+                $scope.isUser = true;
+            }
+            if (user && user.name == $scope.info.code) {
+                $scope.isMe = true;
             }
             var genCloseFriend = function() {
                 var information = '';
@@ -153,31 +156,34 @@ angular.module('addModule', [])
             };
 
             $scope.add = function() {
-                var info = genStudentData();
-                console.log(info);
-                $scope.loading = true;
-                if (upload) {
-                    uploadService($scope.info.image).then(function (url) {
-                        hidden.log('uploaded', url);
-                        if (url) {
-                            info.image = url;
-                            $scope.info.image = url;
-                            upload = false;
-                            set(info);
-                        } else {
-                            info.image = '';
-                            set(info);
-                        }
-                    }, function () {
-                        addError('Upload image failed');
-                    });
+                if ($scope.isUser && user.name != $scope.info.code) {
+                    toastr.warning("You can only add student that's your own");
                 } else {
-                    set(info);
+                    var info = genStudentData();
+                    console.log(info);
+                    $scope.loading = true;
+                    if (upload) {
+                        uploadService($scope.info.image).then(function (url) {
+                            hidden.log('uploaded', url);
+                            if (url) {
+                                info.image = url;
+                                $scope.info.image = url;
+                                upload = false;
+                                set(info);
+                            } else {
+                                info.image = '';
+                                set(info);
+                            }
+                        }, function () {
+                            addError('Upload image failed');
+                        });
+                    } else {
+                        set(info);
+                    }
                 }
             };
 
             $scope.openCamera = function () {
-                if ($scope.isAdmin) {
                   navigator.camera.getPicture(function (imageData) {
                     $scope.info.image = "data:image/jpeg;base64," + imageData;
                     $scope.$apply();
@@ -187,7 +193,6 @@ angular.module('addModule', [])
                   }, {
                     destinationType: 0
                   });
-                }
             };
         }
     ]);

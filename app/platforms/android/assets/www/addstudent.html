@@ -1,9 +1,9 @@
 <div class="container" style="padding:0px">
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
-            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="!update && isAdmin">< Add Student</h4>
-            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="update && isAdmin">< Update Student</h4>
-            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="!isAdmin">< View Student</h4>
+            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="(isAdmin || isUser) && !update">< Add Student</h4>
+            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="update && (isAdmin || isMe)">< Update Student</h4>
+            <h4 class="panel-title pull-left"  ng-click="back()" style="padding-top: 7.5px;" ng-show="isUser && !isMe && update && !isAdmin" >< View Student</h4>
             <div class="btn-group pull-right" ng-click="refresh()" ng-show="update">
                 <a href="#" class="btn btn-default btn-sm"><i class="fa fa-refresh" style=""></i></a>
             </div>
@@ -19,42 +19,52 @@
                 <div class="form-group" ng-class="{'has-error': addForm.code.$invalid &&
                                  addForm.code.$dirty}">
                     <label for="code">Student Code *:</label>
-                    <input placeholder="56216XXXXX" ng-model="info.code" type="text" ng-disabled="update || !isAdmin" required class="form-control" name="code" minlength="10" maxlength="10">
+                    <input placeholder="56216XXXXX" ng-model="info.code" type="text" ng-disabled="update" required class="form-control" name="code" minlength="10" maxlength="10">
                 </div>
                 <div class="form-group" ng-class="{'has-error': addForm.name.$invalid &&
                                  addForm.name.$dirty}">
                     <label for="name">Firstname *:</label>
-                    <input ng-disabled="!isAdmin" placeholder="Firstname.." ng-model="info.name" type="text" required class="form-control" name="name" maxlength="50">
+                    <input ng-disabled="isUser && !isMe && update" placeholder="Firstname.." ng-model="info.name" type="text" required class="form-control" name="name" maxlength="50">
                 </div>
                 <div class="form-group" ng-class="{'has-error': addForm.surname.$invalid &&
                                  addForm.surname.$dirty}">
                     <label for="surname">Lastname *:</label>
-                    <input ng-disabled="!isAdmin" placeholder="Lastname.." ng-model="info.surname" type="text" required class="form-control" name="surname" maxlength="50">
+                    <input ng-disabled="isUser && !isMe && update" placeholder="Lastname.." ng-model="info.surname" type="text" required class="form-control" name="surname" maxlength="50">
                 </div>
                 <div class="form-group" ng-class="{'has-error': addForm.tel.$invalid &&
                                  addForm.tel.$dirty}">
                     <label for="tel">Tel:</label>
-                    <input ng-disabled="!isAdmin" placeholder="0998887777" ng-model="info.tel" type="tel" class="form-control" name="tel" maxlength="10" pattern="^0[0-9]{9}">
+                    <input ng-disabled="isUser && !isMe && update" placeholder="0998887777" ng-model="info.tel" type="tel" class="form-control" name="tel" maxlength="10" pattern="^0[0-9]{9}">
+                </div>
+                <div class="form-group">
+                    <label for="teacher">Teacher Consultant:</label>
+                    <input ng-disabled="isUser && !isMe && update" placeholder="Teacher Consultant.." ng-model="info.teacher" type="text" class="form-control" name="teacher" maxlength="50">
                 </div>
                 <div class="form-group">
                     <label for="facebook">Facebook:</label>
-                    <input ng-disabled="!isAdmin" placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
+                    <input ng-disabled="isUser && !isMe && update" placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <textarea ng-disabled="!isAdmin" placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
+                    <textarea ng-disabled="isUser && !isMe && update" placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
                     </textarea>
                 </div>
                 <div class="form-group">
+                    <label for="pr">Parent:</label>
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.prname" type="text" class="form-control" name="prname" placeholder="Firstname..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.prsurname" ng-show="info.prname" style="margin-top:5px;" type="text" class="form-control" name="prsurname" placeholder="Lastname..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.praddress" ng-show="info.prname && info.prsurname" style="margin-top:5px;" type="text" class="form-control" name="praddress" placeholder="Tel..">
+                </div>
+                <div class="form-group">
                     <label for="cf">Close Friend:</label>
-                    <input ng-disabled="!isAdmin" ng-model="info.cfname" type="text" class="form-control" name="cfname" placeholder="Firstname..">
-                    <input ng-disabled="!isAdmin" ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
-                    <input ng-disabled="!isAdmin" ng-model="info.cfaddress" ng-show="info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Tel..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.cfname" type="text" class="form-control" name="cfname" placeholder="Firstname..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.cfaddress" ng-show="info.cfname && info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Tel..">
                 </div>
                 <button ng-disabled="loading" type="button" ng-click="back()" class="btn btn-default">Back</button>
-                <button ng-show="isAdmin && !update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
-                <button ng-show="isAdmin && update" ng-disabled="loading" type="submit" class="btn btn-success" style="float:right;">Update</button>
-                <button ng-show="isAdmin && !update" ng-disabled="loading" type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
+                <button ng-show="!update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
+                <button ng-show="update && (isAdmin || isMe)" ng-disabled="loading" type="submit" class="btn btn-success" style="float:right;">Update</button>
+                <button ng-show="!update" ng-disabled="loading" type="reset" class="btn btn-default" style="float:right;margin-right:10px;">Reset</button>
             </form>
         </div>
     </div>

@@ -60,6 +60,8 @@ angular.module('datatableModule', [])
             }
 
             $scope.listYear = function(year) {
+                $scope.searchText = '';
+                searchMode = false;
                 $scope.pageSelected = 1;
                 $scope.yearSelected = year;
                 init();
@@ -104,6 +106,18 @@ angular.module('datatableModule', [])
                     }
                     if (cf[2]) {
                         item.cfaddress = cf[2];
+                    }
+                }
+                if (item.parent) {
+                    var pr = item.parent.split(',');
+                    if (pr[0]) {
+                        item.prname = pr[0];
+                    }
+                    if (pr[1]) {
+                        item.prsurname = pr[1];
+                    }
+                    if (pr[2]) {
+                        item.praddress = pr[2];
                     }
                 }
                 $state.go('dashboard.add', {
