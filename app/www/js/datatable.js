@@ -105,6 +105,18 @@ angular.module('datatableModule', [])
                         item.cfaddress = cf[2];
                     }
                 }
+                if (item.parent) {
+                    var pr = item.parent.split(',');
+                    if (pr[0]) {
+                        item.prname = pr[0];
+                    }
+                    if (pr[1]) {
+                        item.prsurname = pr[1];
+                    }
+                    if (pr[2]) {
+                        item.praddress = pr[2];
+                    }
+                }
                 $state.go('dashboard.add', {
                     info: item
                 });

@@ -10,7 +10,8 @@ global.router.route('/student/add')
         libUtil.select(['id'], 'students', ['id'], [infoEscaper.code]).then(function(checkExist) {
             if (checkExist.result == 1) {
                 libUtil.insert('students', [infoEscaper.code, infoEscaper.year, info.name,
-                    info.surname, info.tel, info.facebook, info.address, info.cf, info.image
+                    info.surname, info.tel, info.facebook, info.address, info.cf, info.image,
+                    info.teacher, info.parent
                 ]).then(function() {
                     res.json({
                         result: 0
@@ -154,7 +155,9 @@ global.router.route('/student/update')
                     facebook: info.facebook,
                     address: info.address,
                     friend: info.cf,
-                    image: info.image || ''
+                    image: info.image || '',
+                    teacher: info.teacher,
+                    parent: info.parent
                 }, {
                     id: infoEscaper.code
                 }).then(function() {

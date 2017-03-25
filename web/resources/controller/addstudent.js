@@ -34,6 +34,20 @@ angular.module('addModule', [])
                 return information;
             };
 
+            var genParent = function() {
+                var information = '';
+                if ($scope.info.prname) {
+                    information = $scope.info.prname;
+                    if ($scope.info.cfsurname) {
+                        information += ',' + $scope.info.prsurname;
+                        if ($scope.info.cfaddress) {
+                            information += ',' + $scope.info.praddress;
+                        }
+                    }
+                }
+                return information;
+            };
+
             var genStudentData = function() {
                 var information = {
                     code: $scope.info.code,
@@ -43,9 +57,11 @@ angular.module('addModule', [])
                     facebook: $scope.info.facebook || '',
                     address: $scope.info.address || '',
                     year: $scope.info.code.substring(0, 2),
-                    image: $scope.info.image
+                    image: $scope.info.image,
+                    teacher: $scope.info.teacher
                 };
                 information.cf = genCloseFriend();
+                information.parent = genParent();
                 return information;
             };
 
