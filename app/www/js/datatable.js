@@ -60,6 +60,9 @@ angular.module('datatableModule', [])
             }
 
             $scope.listYear = function(year) {
+                $scope.searchText = '';
+                searchMode = false;
+                $scope.pageSelected = 1;
                 $scope.yearSelected = year;
                 init();
             };
