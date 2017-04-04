@@ -100,6 +100,16 @@ angular.module('addModule', [])
                 return information;
             };
 
+            var genAddress = function () {
+                var information = '';
+                    information = $scope.info.houseno || '';
+                    information += ',' + ($scope.info.subdistrict || '');
+                    information += ',' + ($scope.info.district || '');
+                    information += ',' + ($scope.info.province || '');
+                    information += ',' + ($scope.info.postal || '');
+                return information;
+            };
+
             var genStudentData = function() {
                 var information = {
                     code: $scope.info.code,
@@ -107,13 +117,13 @@ angular.module('addModule', [])
                     surname: $scope.info.surname,
                     tel: $scope.info.tel || '',
                     facebook: $scope.info.facebook || '',
-                    address: $scope.info.address || '',
                     year: $scope.info.code.substring(0, 2),
                     image: $scope.info.image,
                     teacher: $scope.info.teacher
                 };
                 information.cf = genCloseFriend();
                 information.parent = genParent();
+                information.address = genAddress();
                 return information;
             };
 

@@ -113,6 +113,15 @@ angular.module('datatableModule', [])
                         item.praddress = pr[2];
                     }
                 }
+                if (item.address) {
+                    var address = item.address.split(',');
+                    console.log('address', address);
+                    item.houseno = address[0];
+                    item.subdistrict = address[1];
+                    item.district = address[2];
+                    item.province = address[3];
+                    item.postal = address[4];
+                }
                 $state.go('dashboard.add', {
                     info: item
                 });

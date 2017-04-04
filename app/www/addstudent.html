@@ -45,9 +45,24 @@
                     <input ng-disabled="isUser && !isMe && update" placeholder="Ex. www.facebook.com/example || example" ng-model="info.facebook" type="text" class="form-control" name="facebook" maxlength="50">
                 </div>
                 <div class="form-group">
-                    <label for="address">Address:</label>
-                    <textarea ng-disabled="isUser && !isMe && update" placeholder="Address.." ng-model="info.address" type="text" class="form-control" name="address" maxlength="200">
-                    </textarea>
+                    <label for="address">House No:</label>
+                    <input ng-disabled="isUser && !isMe && update" placeholder=">House No.." ng-model="info.houseno" type="text" class="form-control" name="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="address">Sub-district:</label>
+                    <input ng-disabled="isUser && !isMe && update" placeholder="Sub-district.." ng-model="info.subdistrict" type="text" class="form-control" name="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="address">District:</label>
+                    <input ng-disabled="isUser && !isMe && update" placeholder="District.." ng-model="info.district" type="text" class="form-control" name="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="address">Province:</label>
+                    <input ng-disabled="isUser && !isMe && update"  placeholder="Province.." ng-model="info.province" type="text" class="form-control" name="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="address">Postal Code:</label>
+                    <input ng-disabled="isUser && !isMe && update"  placeholder="Postal Code.." ng-model="info.postal" type="text" class="form-control" name="address" maxlength="200">
                 </div>
                 <div class="form-group">
                     <label for="pr">Parent:</label>
