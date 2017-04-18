@@ -31,7 +31,7 @@
                 <div class="form-group" ng-class="{'has-error': addForm.tel.$invalid &&
                                  addForm.tel.$dirty}">
                     <label for="tel">Tel:</label>
-                    <input placeholder="0998887777" ng-model="info.tel" type="tel" class="form-control" name="tel" maxlength="10" pattern="^0[0-9]{9}">
+                    <input class="form-control" pattern="^0[0-9-]{11}" type="text" placeholder="099-888-7777" ng-model="info.tel" name="tel" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
                 </div>
                 <div class="form-group">
                     <label for="teacher">Teacher Consultant:</label>
