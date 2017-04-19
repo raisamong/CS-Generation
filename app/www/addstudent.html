@@ -68,13 +68,13 @@
                     <label for="pr">Parent:</label>
                     <input ng-disabled="isUser && !isMe && update" ng-model="info.prname" type="text" class="form-control" name="prname" placeholder="Firstname..">
                     <input ng-disabled="isUser && !isMe && update" ng-model="info.prsurname" ng-show="info.prname" style="margin-top:5px;" type="text" class="form-control" name="prsurname" placeholder="Lastname..">
-                    <input ng-disabled="isUser && !isMe && update" ng-model="info.praddress" ng-show="info.prname && info.prsurname" style="margin-top:5px;" type="text" class="form-control" name="praddress" placeholder="Tel..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.praddress" ng-show="info.prname && info.prsurname" style="margin-top:5px;" type="text" class="form-control" pattern="^0[0-9-]{11}"  placeholder="099-888-7777" name="praddress" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
                 </div>
                 <div class="form-group">
                     <label for="cf">Close Friend:</label>
                     <input ng-disabled="isUser && !isMe && update" ng-model="info.cfname" type="text" class="form-control" name="cfname" placeholder="Firstname..">
                     <input ng-disabled="isUser && !isMe && update" ng-model="info.cfsurname" ng-show="info.cfname" style="margin-top:5px;" type="text" class="form-control" name="cfsurname" placeholder="Lastname..">
-                    <input ng-disabled="isUser && !isMe && update" ng-model="info.cfaddress" ng-show="info.cfname && info.cfsurname" style="margin-top:5px;" type="text" class="form-control" name="cfaddress" placeholder="Tel..">
+                    <input ng-disabled="isUser && !isMe && update" ng-model="info.cfaddress" ng-show="info.cfname && info.cfsurname" style="margin-top:5px;" type="text" class="form-control" pattern="^0[0-9-]{11}"  placeholder="099-888-7777"  name="cfaddress" onkeydown="javascript:backspacerDOWN(this,event);" onkeyup="javascript:backspacerUP(this,event);" />
                 </div>
                 <button ng-disabled="loading" type="button" ng-click="back()" class="btn btn-default">Back</button>
                 <button ng-show="!update" ng-disabled="loading" type="submit" class="btn btn-primary" style="float:right;">Add</button>
